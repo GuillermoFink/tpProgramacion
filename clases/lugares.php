@@ -37,7 +37,8 @@ class Lugares
 		return $this->_discapacitado;
 	}
 
-	#METODOS-----------------------------------------------------------------------------------------------------------------
+	#METODOS---------------------------------------------------------------------------------------------------------------------------
+	#LIBERAR LUGAR DE LA BASE----------------------------------------------------------------------------------------------------------
 	public static function LiberarLugar($obj)
 	{
 		$rta = false;
@@ -51,6 +52,7 @@ class Lugares
 		}
 		return $rta;
 	}
+	#OCUPAR LUGAR EN LA BASE LUGARES--------------------------------------------------------------------------------------------------- 
 	public static function OcuparLugar($id)
 	{
 		$rta = false;
@@ -64,6 +66,8 @@ class Lugares
 		}
 		return $rta;
 	}
+
+	#PRIMER USO DE LUGARES--------------------------------------------------------------------------------------------------------------
 	public static function PrimerUso()
 	{
 		$rta = false;
