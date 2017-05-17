@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'clases/lugares.php';
 include_once 'clases/vehiculo.php';
 include_once 'clases/usuarios.php';
@@ -28,10 +29,11 @@ if(isset($_POST["user"]) && isset($_POST["pw"]))
 {
 	if(Usuario::LoginUser($_POST["user"],$_POST["pw"]))
 	{
-		echo "ok";
+		echo "Ok";
+		#echo $_SESSION["tipo"];
 	}else
 	{
-		echo "no ok";
+		echo "Usuario o Password incorrecto";
 	}
 }
 ?>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once 'clases/usuarios.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,12 +13,19 @@ session_start();
 	<title></title>
 </head>
 <body>
-<input type="text" name="nombre" id="nombre" placeholder="NOMBRE">
-<br>
-<input type="password" name="password" id="password" placeholder="PASSWORD">
-<br>
-<button onclick='LlenarBase()'>Llenar Base</button>
-<button onclick='AltaAuto()'>TestAuto</button>
-<button onclick='Login()'>Login</button>
+	<h1>Bienvenido <?php echo $_SESSION["nombre"];?>!</h1>
+	<div>
+		<select id="filtro">
+			<option>Todos</option>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+		</select>
+	</div>
+	<div id="tablaUsuarios">
+		<?php
+			Usuario::TablaUsuarios();
+		?>
+	</div>
 </body>
 </html>

@@ -141,10 +141,39 @@ class Usuario
 			{
 				if($users->GetNombre()==$usuario && $users->GetPassword()==$password)
 				{
+					$_SESSION["nombre"] = $users->GetNombre();
+					$_SESSION["turno"] = $users->GetTurno();
+					$_SESSION["tipo"] = $users->GetTipo();
 					$rta = true;
 				}
 			}
 		return $rta;	
 	}
+
+	public static function TablaUsuarios()
+	{
+		$inicio = "<table border='1'>
+						<thead>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Turno</th>
+							<th>Tipo</th>
+						</thead>";
+		$fin = "</table>";
+		$datos = "";
+		$misUsuarios = array();
+		$misUsuarios = Usuario::TraerUsuarios();
+		foreach ($misUsuarios as $users)
+		{
+			$datos.="<tr>
+						<td>".$users->GetNombre()."</td>
+						<td>".$users->GetApellido()."</td>
+						<td>".$users->GetTurno()."</td>
+						<td>".$users->GetTipo()."</td>
+					</tr>";
+		}
+		echo $inicio.$datos.$fin;
+	}
+	
 }
 ?>

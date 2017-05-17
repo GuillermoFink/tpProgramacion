@@ -12,6 +12,7 @@ function Login()
 	a.done(function(respuesta)
 	{
 		alert(respuesta);
+		window.location.href = "operaciones.php";
 	});
 }
 function LlenarBase()
