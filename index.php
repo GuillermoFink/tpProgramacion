@@ -9,7 +9,12 @@
 	<title></title>
 </head>
 <body>
+<input type="text" name="nombre" id="nombre" placeholder="NOMBRE">
+<br>
+<input type="password" name="password" id="password" placeholder="PASSWORD">
+<br>
 <button onclick='LlenarBase()'>Llenar Base</button>
 <button onclick='AltaAuto()'>TestAuto</button>
+<button onclick='Login()'>Login</button>
 </body>
 </html>

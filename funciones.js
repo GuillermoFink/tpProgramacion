@@ -1,3 +1,19 @@
+function Login()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				user: $("#nombre").val(),
+				pw: $("#password").val()
+			}
+	});
+	a.done(function(respuesta)
+	{
+		alert(respuesta);
+	});
+}
 function LlenarBase()
 {
 	var a=$.ajax({

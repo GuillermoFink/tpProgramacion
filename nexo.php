@@ -1,6 +1,7 @@
 <?php
 include_once 'clases/lugares.php';
 include_once 'clases/vehiculo.php';
+include_once 'clases/usuarios.php';
 
 if (isset($_POST["queHago"]))
 {
@@ -16,6 +17,16 @@ if(isset($_POST["pat"]) && isset($_POST["marca"]) && isset($_POST["color"]) && i
 {
 	$miauto = new Vehiculo($_POST["pat"],$_POST["lugar"],$_POST["marca"],$_POST["color"],time());
 	if (Vehiculo::IngresarAuto($miauto) && Lugares::OcuparLugar($miauto->GetId()))
+	{
+		echo "ok";
+	}else
+	{
+		echo "no ok";
+	}
+}
+if(isset($_POST["user"]) && isset($_POST["pw"]))
+{
+	if(Usuario::LoginUser($_POST["user"],$_POST["pw"]))
 	{
 		echo "ok";
 	}else

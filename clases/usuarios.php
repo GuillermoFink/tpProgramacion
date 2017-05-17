@@ -6,16 +6,18 @@ class Usuario
 {
 	#ATRIBUTOS-----------------------------------------------------------------------------------
 	private $_id;
+	private $_password;
 	private $_nombre;
 	private $_apellido;
 	private $_tipo;
 	private $_turno;
 
 	#CONSTRUCTOR---------------------------------------------------------------------------------
-	function __construct($nombre,$apellido,$tipo,$turno,$id=null)
+	function __construct($nombre,$password,$apellido,$tipo,$turno,$id=null)
 	{
 		$this->_id = $id;
 		$this->_nombre = $nombre;
+		$this->_password = $password;
 		$this->_apellido = $apellido;
 		$this->_tipo = $tipo;
 		$this->_turno = $turno;
@@ -27,13 +29,18 @@ class Usuario
 		return $this->_id;
 	}
 	#---------------------------------------------------------------------------------------------
+	public function GetPassword()
+	{
+		return $this->_password;
+	}
+	#---------------------------------------------------------------------------------------------
 	public function GetNombre()
 	{
 		return $this->_nombre;
 	}
 	public function SetNombre($nombre)
 	{
-		$this->_nombre = $nombre
+		$this->_nombre = $nombre;
 	}
 	#---------------------------------------------------------------------------------------------
 	public function GetApellido()
@@ -69,8 +76,9 @@ class Usuario
 	{
 		$resultado = FALSE;
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$db = $pdo->prepare("INSERT INTO usuarios (nombre,apellido,tipo,turno)VALUES(:nombre,:apellido,:tipo,:turno)");
+		$db = $pdo->prepare("INSERT INTO usuarios (nombre,password,apellido,tipo,turno)VALUES(:nombre,:password,:apellido,:tipo,:turno)");
 		$db->bindValue(':nombre',$obj->GetNombre());
+		$db->bindValue(':password',$obj->GetPassword());
 		$db->bindValue(':apellido',$obj->GetApellido());
 		$db->bindValue(':tipo',$obj->GetTipo());
 		$db->bindValue(':turno',$obj->GetTurno());
@@ -118,10 +126,25 @@ class Usuario
 		$contenido = $pdo->query("SELECT * FROM usuarios");
 		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
 			{
-				$unAuto = new Vehiculo($linea["nombre"],$linea["apellido"],$linea["tipo"],$linea["turno"],$linea["id"]);
-				array_push($ListaDeUsuarios, $unAuto);
+				$unUsuario = new Usuario($linea["nombre"],$linea["password"],$linea["apellido"],$linea["tipo"],$linea["turno"],$linea["id"]);
+				array_push($ListaDeUsuarios, $unUsuario);
 			}				
 		return $ListaDeUsuarios;
+	}
+
+	public static function LoginUser($usuario,$password)
+	{
+		$misUsuarios = array();
+		$misUsuarios = Usuario::TraerUsuarios();
+		$rta = false;
+		foreach ($misUsuarios as $users)
+			{
+				if($users->GetNombre()==$usuario && $users->GetPassword()==$password)
+				{
+					$rta = true;
+				}
+			}
+		return $rta;	
 	}
 }
 ?>
