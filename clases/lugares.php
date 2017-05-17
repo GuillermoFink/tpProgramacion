@@ -39,13 +39,13 @@ class Lugares
 
 	#METODOS---------------------------------------------------------------------------------------------------------------------------
 	#LIBERAR LUGAR DE LA BASE----------------------------------------------------------------------------------------------------------
-	public static function LiberarLugar($obj)
+	public static function LiberarLugar($id)
 	{
 		$rta = false;
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
 		$db = $pdo->prepare("UPDATE lugares SET ocupado=:ocupado WHERE id_lugar=:lugar");
 		$db->bindValue(':ocupado',false);
-		$db->bindValue(':lugar',$obj->GetId());
+		$db->bindValue(':lugar',$id);
 		if($db->execute())
 		{
 			$rta = true;
