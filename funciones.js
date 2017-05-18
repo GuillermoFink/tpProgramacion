@@ -48,3 +48,25 @@ function AltaAuto()
 		alert(respuesta);
 	});
 }
+function EliminarUsuario(id)
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				idParaEliminar: id 
+			}
+	});
+	a.done(function(respuesta)
+	{
+		//alert(respuesta);
+		if (respuesta != "error")
+		{
+			$("#tablausuarios").html(respuesta);
+		}else
+		{
+			alert("Error al eliminar usuario");
+		}
+	});
+}

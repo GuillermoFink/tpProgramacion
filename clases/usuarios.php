@@ -152,12 +152,16 @@ class Usuario
 
 	public static function TablaUsuarios()
 	{
-		$inicio = "<table border='1'>
+		$inicio = "<table class='table table-hover'>
 						<thead>
-							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Turno</th>
-							<th>Tipo</th>
+							<tr class='info'>
+								<th>Id</th>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Turno</th>
+								<th>Tipo</th>
+								<th>Accion</th>
+							</tr>
 						</thead>";
 		$fin = "</table>";
 		$datos = "";
@@ -166,10 +170,14 @@ class Usuario
 		foreach ($misUsuarios as $users)
 		{
 			$datos.="<tr>
+						<td>".$users->GetId()."</td>
 						<td>".$users->GetNombre()."</td>
 						<td>".$users->GetApellido()."</td>
 						<td>".$users->GetTurno()."</td>
 						<td>".$users->GetTipo()."</td>
+						<td>
+							<button onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
+						</td>
 					</tr>";
 		}
 		echo $inicio.$datos.$fin;

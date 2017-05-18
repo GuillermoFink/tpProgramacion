@@ -105,6 +105,37 @@ class Vehiculo
 				array_push($ListaDeAutos, $unAuto);
 			}				
 		return $ListaDeAutos;
+	}
+	#TABLA DE VEHICULOS-----------------------------------------------------------------
+	public static function TablaEstacionados()
+	{
+		$estacionados = array()
+		$estacionados = Vehiculo::TraerAutosEstacionados();
+		$inicio = "<table class='table table-hover'>
+						<thead>
+							<tr class='info'>
+								<th>Patente</th>
+								<th>Lugar</th>
+								<th>Marca</th>
+								<th>Color</th>
+								<th>Hora</th>
+								<th>Monto Actual</th>
+							</tr>
+						</thead>";
+		$fin= "</table>";
+		$datos= "";
+		foreach ($estacionados as $auto)
+		{
+			$tiempo = time()-$auto->GetHora();
+			$horas = ($tiempo/60)/60;
+			$datos.= "<td>".."</td>";
+		}
+	}
+	public static function CalcularMonto($tiempo)
+	{
+		$estadia = time()-$tiempo;
+		$horas = ($estadia/60)/60;
+		
 	}	
 }
 ?>

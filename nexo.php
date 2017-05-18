@@ -36,4 +36,14 @@ if(isset($_POST["user"]) && isset($_POST["pw"]))
 		echo "Usuario o Password incorrecto";
 	}
 }
+if(isset($_POST["idParaEliminar"]))
+{
+	if (Usuario::BajaUsuario($_POST["idParaEliminar"]))
+	{
+		Usuario::TablaUsuarios();
+	}else
+	{
+		echo "error";
+	}
+}
 ?>
