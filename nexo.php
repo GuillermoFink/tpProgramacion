@@ -46,4 +46,14 @@ if(isset($_POST["idParaEliminar"]))
 		echo "error";
 	}
 }
+if(isset($_POST["cerrarSesion"]))
+{
+	if(Usuario::CerrarSesion($_POST["cerrarSesion"]))
+	{
+		echo "ok";
+	}else
+	{
+		echo "error";
+	}
+}
 ?>

@@ -70,3 +70,18 @@ function EliminarUsuario(id)
 		}
 	});
 }
+function CerrarSesion(id_usuario)
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data: 
+		{
+			cerrarSesion: id_usuario
+		}
+	});
+	a.done(function(respuesta)
+	{
+		alert(respuesta);
+	});
+}

@@ -141,15 +141,43 @@ class Usuario
 			{
 				if($users->GetNombre()==$usuario && $users->GetPassword()==$password)
 				{
+					$_SESSION["id"]= $users->GetId();
 					$_SESSION["nombre"] = $users->GetNombre();
 					$_SESSION["turno"] = $users->GetTurno();
 					$_SESSION["tipo"] = $users->GetTipo();
+					$_SESSION["login"] = time();
 					$rta = true;
 				}
 			}
 		return $rta;	
 	}
-
+	public static function CerrarSesion($id,$login)
+	{
+		$rta = FALSE;
+		$inicio = Usuario::GenerarDate($login);
+		$fin = Usuario::GenerarDate(time());
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("INSERT INTO registro_usuarios (id_usuario,login,logout)VALUES(:id,:login,:logout)");
+		$db->bindValue(':id',$id);
+		$db->bindValue(':login',$inicio);
+		$db->bindValue(':logout',$fin);
+		if($db->execute())
+		{
+			$rta = TRUE;
+		}
+		return $rta;
+	}
+	public static function GenerarDate($timestamp)
+	{
+		$fecha = getdate($timestamp);
+		$dia = $fecha["mday"];
+		$mes = $fecha["mon"];
+		$anio = $fecha["year"];
+		$hora = $fecha["hours"];
+		$minuto = $fecha["minutes"];
+		$fechaFormateada = date($dia."-".$mes."-".$anio."  ".$hora.":".$minuto);
+		return $fechaFormateada;
+	}
 	public static function TablaUsuarios()
 	{
 		$inicio = "<table class='table table-hover'>
