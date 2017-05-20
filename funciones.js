@@ -11,8 +11,15 @@ function Login()
 	});
 	a.done(function(respuesta)
 	{
-		alert(respuesta);
-		window.location.href = "operaciones.php";
+		if(respuesta == "Ok")
+		{
+			window.location.href = "operaciones.php";
+		}
+		else
+		{
+			alert(respuesta);
+			window.location.href = "index.php";
+		}
 	});
 }
 function LlenarBase()
@@ -70,18 +77,20 @@ function EliminarUsuario(id)
 		}
 	});
 }
-function CerrarSesion(id_usuario)
+function CerrarSesion(id_usuario,login)
 {
 	var a=$.ajax({
 		type: 'post',
 		url: 'nexo.php',
 		data: 
 		{
-			cerrarSesion: id_usuario
+			cerrarSesion: id_usuario,
+			tiempo: login
 		}
 	});
 	a.done(function(respuesta)
 	{
 		alert(respuesta);
+		window.location.href ="index.php";
 	});
 }

@@ -109,7 +109,7 @@ class Vehiculo
 	#TABLA DE VEHICULOS-----------------------------------------------------------------
 	public static function TablaEstacionados()
 	{
-		$estacionados = array()
+		$estacionados = array();
 		$estacionados = Vehiculo::TraerAutosEstacionados();
 		$inicio = "<table class='table table-hover'>
 						<thead>
@@ -128,14 +128,13 @@ class Vehiculo
 		{
 			$tiempo = time()-$auto->GetHora();
 			$horas = ($tiempo/60)/60;
-			$datos.= "<td>".."</td>";
+			$datos.= "<td>".$horas."</td>";
 		}
 	}
 	public static function CalcularMonto($tiempo)
 	{
 		$estadia = time()-$tiempo;
 		$horas = ($estadia/60)/60;
-		
 	}	
 }
 ?>

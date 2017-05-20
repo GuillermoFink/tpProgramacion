@@ -21,7 +21,7 @@ include_once 'clases/lugares.php';
 <body>
 
 <div class="container">
-  <h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</t></h2><button onclick ="CerrarSesion()">Cerrar Sesion</button>
+  <h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</t></h2><button onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
     <li><a data-toggle="tab" href="#menu1">Usuarios</a></li>

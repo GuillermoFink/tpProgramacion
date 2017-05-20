@@ -48,8 +48,9 @@ if(isset($_POST["idParaEliminar"]))
 }
 if(isset($_POST["cerrarSesion"]))
 {
-	if(Usuario::CerrarSesion($_POST["cerrarSesion"]))
+	if(Usuario::CerrarSesion($_POST["cerrarSesion"],$_POST["tiempo"]))
 	{
+		session_destroy();
 		echo "ok";
 	}else
 	{

@@ -136,7 +136,7 @@ class Usuario
 	{
 		$misUsuarios = array();
 		$misUsuarios = Usuario::TraerUsuarios();
-		$rta = false;
+		$rta = FALSE;
 		foreach ($misUsuarios as $users)
 			{
 				if($users->GetNombre()==$usuario && $users->GetPassword()==$password)
@@ -146,7 +146,10 @@ class Usuario
 					$_SESSION["turno"] = $users->GetTurno();
 					$_SESSION["tipo"] = $users->GetTipo();
 					$_SESSION["login"] = time();
-					$rta = true;
+				}
+				if(isset($_SESSION["nombre"]))
+				{
+					$rta = TRUE;
 				}
 			}
 		return $rta;	

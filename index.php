@@ -19,5 +19,6 @@ session_start();
 <button onclick='LlenarBase()'>Llenar Base</button>
 <button onclick='AltaAuto()'>TestAuto</button>
 <button onclick='Login()'>Login</button>
+<button onclick='CerrarSesion()'>Cerrar Sesion</button>
 </body>
 </html>
