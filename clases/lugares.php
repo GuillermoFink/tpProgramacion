@@ -66,7 +66,58 @@ class Lugares
 		}
 		return $rta;
 	}
+	#LUGARES LIBRES POR PISO-----------------------------------------------------------------------------------------------------------
+	public static function LugaresLibres($piso)
+	{
+		$datos = "";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("SELECT * FROM lugares WHERE id_piso = :piso");
+		$db->bindValue(':piso',$piso);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			if ($linea["ocupado"] != true)
+			{
+				$datos.="<option>".$linea["id_lugar"]."</option>";
+			}
+		}
+		echo $datos;
+	}
 
+	#GRILLA LUGARES LIBRES-------------------------------------------------------------------------------------------------------------
+	public static function GrillaLugares($piso)
+	{
+		$inicio ="<table class='table-bordered'>";
+		$datos ="";
+		$fin ="</table>";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("SELECT * FROM lugares WHERE id_piso = :piso");
+		$db->bindValue(':piso',$piso);
+		$db->execute();
+		$cont = 0;
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			if($cont == 0 || $cont %10 == 0)
+			{
+				$datos.='<tr>';	
+			}				
+			if ($linea["ocupado"] != true )
+			{
+				$datos.='<td class="bg-danger">'.$linea["id_lugar"].'</td>';
+			}else
+			{
+				$datos.='<td class="bg-success">'.$linea["id_lugar"].'</td>';
+			}
+			$cont++;
+			if($cont == 10)
+			{
+				$datos.='</tr>';
+				$cont = 0;	
+			}
+		}
+		echo $inicio.$datos.$fin;
+
+	}
 	#PRIMER USO DE LUGARES--------------------------------------------------------------------------------------------------------------
 	public static function PrimerUso()
 	{

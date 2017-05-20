@@ -18,7 +18,7 @@ class Vehiculo
 		$this->_color = $color;
 		$this->_marca = $marca;
 		$this->_idLugar = $idLugar;
-		$this->_horaIngreso = time();
+		$this->_horaIngreso = $hora;
 	}
 
 	#GETTERS Y SETTERS---------------------------------------------------------------
@@ -126,10 +126,20 @@ class Vehiculo
 		$datos= "";
 		foreach ($estacionados as $auto)
 		{
-			$tiempo = time()-$auto->GetHora();
-			$horas = ($tiempo/60)/60;
-			$datos.= "<td>".$horas."</td>";
+			$actual = time();
+			$tiempo = $actual - $auto->GetHora();
+			$horas = round(($tiempo/60)/60,2);
+			$monto = $horas * 10;
+			$datos.= '<tr>
+						<td>'.$auto->GetPatente().'</td>
+						<td>'.$auto->GetId().'</td>
+						<td>'.$auto->GetMarca().'</td>
+						<td>'.$auto->GetColor().'</td>
+						<td>'.$horas.'</td>
+						<td>'.$monto.'</td>
+					</tr>';
 		}
+		echo $inicio.$datos.$fin;
 	}
 	public static function CalcularMonto($tiempo)
 	{
@@ -138,3 +148,4 @@ class Vehiculo
 	}	
 }
 ?>
+

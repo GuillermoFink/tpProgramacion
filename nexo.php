@@ -27,14 +27,12 @@ if(isset($_POST["pat"]) && isset($_POST["marca"]) && isset($_POST["color"]) && i
 }
 if(isset($_POST["user"]) && isset($_POST["pw"]))
 {
-	if(Usuario::LoginUser($_POST["user"],$_POST["pw"]))
+	$rta="Usuario o Password incorrecto";
+	if(Usuario::LoginUsuario($_POST["user"],$_POST["pw"]))
 	{
-		echo "Ok";
-		#echo $_SESSION["tipo"];
-	}else
-	{
-		echo "Usuario o Password incorrecto";
+		$rta="Ok";
 	}
+	echo $rta;
 }
 if(isset($_POST["idParaEliminar"]))
 {
@@ -56,5 +54,9 @@ if(isset($_POST["cerrarSesion"]))
 	{
 		echo "error";
 	}
+}
+if(isset($_POST["piso"]))
+{
+	Lugares::LugaresLibres($_POST["piso"]);
 }
 ?>

@@ -132,6 +132,30 @@ class Usuario
 		return $ListaDeUsuarios;
 	}
 
+	public static function LoginUsuario($usuario,$password)
+	{
+		$rta = false;
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("SELECT * FROM usuarios WHERE nombre=:nombre AND password=:password");
+		$db->bindValue(':nombre',$usuario);
+		$db->bindValue(':password',$password);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			$unUsuario = new Usuario($linea["nombre"],$linea["password"],$linea["apellido"],$linea["tipo"],$linea["turno"],$linea["id"]);
+		}
+		if(isset($unUsuario))
+		{
+			$_SESSION["id"]= $unUsuario->GetId();
+			$_SESSION["nombre"] = $unUsuario->GetNombre();
+			$_SESSION["turno"] = $unUsuario->GetTurno();
+			$_SESSION["tipo"] = $unUsuario->GetTipo();
+			$_SESSION["login"] = time();
+			$rta =true;			
+		}
+		return $rta;
+	}
+
 	public static function LoginUser($usuario,$password)
 	{
 		$misUsuarios = array();
@@ -147,7 +171,7 @@ class Usuario
 					$_SESSION["tipo"] = $users->GetTipo();
 					$_SESSION["login"] = time();
 				}
-				if(isset($_SESSION["nombre"]))
+				if(isset($_SESSION["nombre"]) && isset($_SESSION["tipo"]))
 				{
 					$rta = TRUE;
 				}

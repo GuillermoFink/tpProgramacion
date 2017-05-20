@@ -32,9 +32,9 @@ include_once 'clases/lugares.php';
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h3>Gestion de estacionamiento</h3>
-      <button>Ingresar Auto</button>
+      <button onclick="IngresarAuto()">Ingresar Auto</button>
       <div id='tablaEstacionados'>
-      	
+      	<?php Vehiculo::TablaEstacionados();?>
       </div>
     </div>
     <div id="menu1" class="tab-pane fade">
@@ -46,8 +46,10 @@ include_once 'clases/lugares.php';
 		</div>
     </div>
     <div id="menu2" class="tab-pane fade">
-      <h3>Menu 2</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+      <h3>Piso 1</h3>
+      <?php
+      Lugares::GrillaLugares(1); 
+      ?>
     </div>
     <div id="menu3" class="tab-pane fade">
       <h3>Menu 3</h3>
@@ -68,12 +70,22 @@ include_once 'clases/lugares.php';
           <h4 class="modal-title">Modificación</h4>
         </div>
         <div class="modal-body">
-        	Codigo<br>
-          <input type="text" name="cod" id="cod" disabled><br>
-          	Nombre<br>
-          <input type="text" name="prod" id="prod"><br>
-          	Foto<br>
-          <input type="text" name="foto" id="foto">
+        	Patente<br>
+          <input type="text" name="patente" id="patente"><br>
+          	Marca<br>
+          <input type="text" name="marca" id="marca"><br>
+          	Modelo<br>
+          <input type="text" name="color" id="color"><br>
+          Piso
+            <select onchange="LugaresLibres()" id="piso">
+              <option selected="selected">1</option>
+              <option>2</option>
+              <option>3</option>
+            </select><br>
+           Lugar
+            <select id="lugaresLibres">
+              <?php Lugares::LugaresLibres(1);?>   
+            </select> 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" onclick="Guardar()">Guardar</button>

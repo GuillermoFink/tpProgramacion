@@ -11,7 +11,8 @@ function Login()
 	});
 	a.done(function(respuesta)
 	{
-		if(respuesta == "Ok")
+		//debugger;
+		if(respuesta === "Ok")
 		{
 			window.location.href = "operaciones.php";
 		}
@@ -92,5 +93,25 @@ function CerrarSesion(id_usuario,login)
 	{
 		alert(respuesta);
 		window.location.href ="index.php";
+	});
+}
+function IngresarAuto()
+{
+	$("#myModal").modal("show");
+}
+function LugaresLibres()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				piso: $("#piso").val()
+			}
+	});
+	a.done(function(respuesta)
+	{	
+		//alert(respuesta);
+		$("#lugaresLibres").html(respuesta);
 	});
 }
