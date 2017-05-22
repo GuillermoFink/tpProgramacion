@@ -214,10 +214,15 @@ class Usuario
 								<th>Nombre</th>
 								<th>Apellido</th>
 								<th>Turno</th>
-								<th>Tipo</th>
-								<th>Accion</th>
-							</tr>
-						</thead>";
+								<th>Tipo</th>";
+								if($_SESSION["tipo"] == "admin")
+								{
+									$inicio.="<th>Accion</th>";	
+								}else
+									{
+										$inicio.="</tr>
+													</thead>";
+									}
 		$fin = "</table>";
 		$datos = "";
 		$misUsuarios = array();
@@ -229,11 +234,17 @@ class Usuario
 						<td>".$users->GetNombre()."</td>
 						<td>".$users->GetApellido()."</td>
 						<td>".$users->GetTurno()."</td>
-						<td>".$users->GetTipo()."</td>
-						<td>
-							<button onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
-						</td>
-					</tr>";
+						<td>".$users->GetTipo()."</td>";
+						if($_SESSION["tipo"] == "admin")
+						{
+							$datos.="<td>
+										<button onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
+									</td>";
+						}
+						else
+							{
+								$datos.="</tr>";
+							}
 		}
 		echo $inicio.$datos.$fin;
 	}

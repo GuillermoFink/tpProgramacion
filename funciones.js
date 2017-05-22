@@ -18,7 +18,7 @@ function Login()
 		}
 		else
 		{
-			alert(respuesta);
+			alert("*"+respuesta);
 			window.location.href = "index.php";
 		}
 	});
