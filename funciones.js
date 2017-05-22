@@ -115,3 +115,30 @@ function LugaresLibres()
 		$("#lugaresLibres").html(respuesta);
 	});
 }
+function AutoParaIngresar()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				patente: $("#patente").val(),
+				marca: $("#marca").val(),
+				color: $("#color").val(),
+				lugar: $("#lugaresLibres").val()
+			}
+	});
+	a.done(function(respuesta)
+	{
+		if (respuesta != "error")
+		{
+			alert("Auto ingresado correctamente");
+			$("#tablaEstacionados").html(respuesta);
+			$("#myModal").modal("hide");
+		}else
+		{
+			alert("Error al ingresar");
+			$("#myModal").modal("hide");
+		}
+	});
+}

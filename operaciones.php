@@ -21,7 +21,7 @@ include_once 'clases/lugares.php';
 <body>
 
 <div class="container">
-  <h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</t></h2><button onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
+  <h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</h2>
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
     <li><a data-toggle="tab" href="#menu1">Usuarios</a></li>
@@ -32,7 +32,11 @@ include_once 'clases/lugares.php';
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h3>Gestion de estacionamiento</h3>
-      <button onclick="IngresarAuto()">Ingresar Auto</button>
+      <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
+      <button class="btn btn-success">Retirar Auto</button>
+      <button class="btn btn-warning">Estadisticas</button>
+      <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
+      <br><center><h2>Autos Estacionados</h2></center>
       <div id='tablaEstacionados'>
       	<?php Vehiculo::TablaEstacionados();?>
       </div>
@@ -67,15 +71,15 @@ include_once 'clases/lugares.php';
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modificación</h4>
+          <h4 class="modal-title">Alta Auto</h4>
         </div>
         <div class="modal-body">
         	Patente<br>
-          <input type="text" name="patente" id="patente"><br>
+          <input type="text" name="patente" id="patente" required><br>
           	Marca<br>
-          <input type="text" name="marca" id="marca"><br>
-          	Modelo<br>
-          <input type="text" name="color" id="color"><br>
+          <input type="text" name="marca" id="marca" required><br>
+            Color<br>
+          <input type="text" name="color" id="color" required><br>
           Piso
             <select onchange="LugaresLibres()" id="piso">
               <option selected="selected">1</option>
@@ -88,7 +92,7 @@ include_once 'clases/lugares.php';
             </select> 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" onclick="Guardar()">Guardar</button>
+          <button type="button" class="btn btn-success" onclick="AutoParaIngresar()">Guardar</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>

@@ -59,4 +59,22 @@ if(isset($_POST["piso"]))
 {
 	Lugares::LugaresLibres($_POST["piso"]);
 }
+if(isset($_POST["marca"]) && isset($_POST["color"]) && isset($_POST["patente"]) && isset($_POST["lugar"]))
+{
+	$miauto = new Vehiculo($_POST["patente"],$_POST["lugar"],$_POST["marca"],$_POST["color"],time());
+	if(Vehiculo::IngresarAuto($miauto))
+	{
+		if(Lugares::OcuparLugar($miauto->GetId()))
+		{
+			Vehiculo::TablaEstacionados();	
+		}else
+		{
+			echo "error";
+		}
+		
+	}else
+	{
+		echo "error";
+	}
+}
 ?>

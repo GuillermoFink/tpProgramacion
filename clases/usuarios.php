@@ -156,7 +156,7 @@ class Usuario
 		return $rta;
 	}
 
-	public static function LoginUser($usuario,$password)
+	/*public static function LoginUser($usuario,$password)
 	{
 		$misUsuarios = array();
 		$misUsuarios = Usuario::TraerUsuarios();
@@ -177,7 +177,7 @@ class Usuario
 				}
 			}
 		return $rta;	
-	}
+	}*/
 	public static function CerrarSesion($id,$login)
 	{
 		$rta = FALSE;
@@ -238,7 +238,9 @@ class Usuario
 						if($_SESSION["tipo"] == "admin")
 						{
 							$datos.="<td>
-										<button onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
+										<button class='btn btn-danger btn-xs' onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
+										<button class='btn btn-success btn-xs' >Modificar</button>
+										<button class='btn btn-warning btn-xs' >Suspender</button>
 									</td>";
 						}
 						else
