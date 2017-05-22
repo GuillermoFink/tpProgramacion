@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2017 a las 00:33:50
+-- Tiempo de generación: 22-05-2017 a las 13:06:38
 -- Versión del servidor: 10.1.19-MariaDB
--- Versión de PHP: 5.6.28
+-- Versión de PHP: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -188,7 +188,22 @@ INSERT INTO `registro_usuarios` (`id_usuario`, `login`, `logout`) VALUES
 (1, '0000-00-00', '0000-00-00'),
 (1, '0000-00-00', '0000-00-00'),
 (1, '0000-00-00', '0000-00-00'),
-(1, '20-5-2017  0:32', '20-5-2017  0:32');
+(1, '20-5-2017  0:32', '20-5-2017  0:32'),
+(2, '1-1-1970  1:0', '20-5-2017  3:39'),
+(3, '20-5-2017  3:44', '20-5-2017  3:44'),
+(3, '20-5-2017  3:55', '20-5-2017  3:55'),
+(3, '20-5-2017  3:56', '20-5-2017  3:56'),
+(3, '20-5-2017  20:31', '20-5-2017  20:37'),
+(3, '20-5-2017  20:37', '20-5-2017  21:31'),
+(3, '20-5-2017  21:44', '20-5-2017  21:48'),
+(3, '20-5-2017  21:50', '20-5-2017  21:53'),
+(3, '20-5-2017  21:53', '20-5-2017  21:53'),
+(3, '20-5-2017  21:53', '20-5-2017  21:54'),
+(3, '20-5-2017  21:56', '20-5-2017  21:57'),
+(2, '20-5-2017  21:58', '20-5-2017  21:58'),
+(3, '20-5-2017  22:1', '20-5-2017  22:33'),
+(3, '20-5-2017  22:33', '20-5-2017  22:35'),
+(3, '20-5-2017  22:35', '20-5-2017  22:35');
 
 -- --------------------------------------------------------
 
@@ -210,7 +225,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `password`, `nombre`, `apellido`, `tipo`, `turno`) VALUES
-(2, 'xxx', 'pedro', 'gutierrez', 'user', 'noche');
+(2, 'xxx', 'pedro', 'gutierrez', 'user', 'noche'),
+(3, 'asd', 'guillo', 'fink', 'admin', 'mañana');
 
 --
 -- Índices para tablas volcadas
@@ -236,7 +252,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
