@@ -97,6 +97,9 @@ function CerrarSesion(id_usuario,login)
 }
 function IngresarAuto()
 {
+	$("#patente").val("");
+	$("#marca").val("");
+	$("#color").val("");
 	$("#myModal").modal("show");
 }
 function LugaresLibres()
@@ -140,5 +143,57 @@ function AutoParaIngresar()
 			alert("Error al ingresar");
 			$("#myModal").modal("hide");
 		}
+	});
+}
+function GrillaLugares(piso)
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				mapaLugares: piso
+			}
+	});
+	a.done(function(respuesta)
+	{
+		$("#lugaresLibres"+piso).html(respuesta);
+	});
+}
+function RetirarAuto()
+{
+	$("#modalRetiroPatente").modal("show");
+}
+function RetirarVehiculo(idUsuario,patente,hora,monto,lugar)
+{
+	var entrada = new Date(parseInt(hora));
+	var salida = new Date();
+	$("#patente_retiro").val(patente);
+	$("#hora_entrada").val(entrada);
+	$("#monto_salida").val(monto);
+	$("#hora_salida").val(salida);
+	$("#idUser").val(idUsuario);
+	$("#idLugar").val(lugar);
+	$("#hora").val(hora);
+	$("#modalRetiro").modal("show");
+}
+function ConfirmarRetiro()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				pat: $("#patente_retiro").val(),
+				iduser: $("#idUser").val(),
+				idlugar:$("#idLugar").val(),
+				hora: $("#hora").val(),
+				monto:$("#monto_salida").val()
+			}
+	});
+	a.done(function(respuesta)
+	{
+		$("#modalRetiro").modal("hide");
+		$("#tablaEstacionados").html(respuesta);
 	});
 }

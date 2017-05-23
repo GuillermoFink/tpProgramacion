@@ -80,12 +80,12 @@ class Vehiculo
 	}
 
 	#ELIMINAR AUTO DE DB-------------------------------------------------------------
-	public static function RetirarAuto($obj)
+	public static function RetirarAuto($patente)
 	{
 		$resultado = FALSE;
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
 		$db = $pdo->prepare("DELETE FROM autos WHERE patente = :patente");
-		$db->bindValue(':patente',$obj->GetPatente());
+		$db->bindValue(':patente',$patente);
 		if ($db->execute())
 		{
 			$resultado = TRUE;
@@ -120,6 +120,7 @@ class Vehiculo
 								<th>Color</th>
 								<th>Hora</th>
 								<th>Monto Actual</th>
+								<th>Accion</th>
 							</tr>
 						</thead>";
 		$fin= "</table>";
@@ -130,14 +131,18 @@ class Vehiculo
 			$tiempo = $actual - $auto->GetHora();
 			$horas = round(($tiempo/60)/60,2);
 			$monto = $horas * 10;
-			$datos.= '<tr>
-						<td>'.$auto->GetPatente().'</td>
-						<td>'.$auto->GetId().'</td>
-						<td>'.$auto->GetMarca().'</td>
-						<td>'.$auto->GetColor().'</td>
-						<td>'.$horas.'</td>
-						<td>'.$monto.'</td>
-					</tr>';
+			$datos.= "<tr>
+						<td>".$auto->GetPatente()."</td>
+						<td>".$auto->GetId()."</td>
+						<td>".$auto->GetMarca()."</td>
+						<td>".$auto->GetColor()."</td>
+						<td>".$horas."</td>
+						<td>".$monto."</td>
+						<td>
+							<button class='btn btn-danger' 
+								onclick='RetirarVehiculo(\"".$_SESSION["id"]."\",\"".$auto->GetPatente()."\",\"".$auto->GetHora()."\",\"".$monto."\",\"".$auto->GetId()."\")'>Retirar</button>
+						</td>
+					</tr>";
 		}
 		echo $inicio.$datos.$fin;
 	}

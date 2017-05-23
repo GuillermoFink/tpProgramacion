@@ -25,15 +25,16 @@ include_once 'clases/lugares.php';
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
     <li><a data-toggle="tab" href="#menu1">Usuarios</a></li>
-    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    <li><a data-toggle="tab" href="#menu2" onclick="GrillaLugares(1)">Piso 1</a></li>
+    <li><a data-toggle="tab" href="#menu3" onclick="GrillaLugares(2)">Piso 2</a></li>
+    <li><a data-toggle="tab" href="#menu4" onclick="GrillaLugares(3)">Piso 3</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h3>Gestion de estacionamiento</h3>
       <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
-      <button class="btn btn-success">Retirar Auto</button>
+      <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
       <button class="btn btn-warning">Estadisticas</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
       <br><center><h2>Autos Estacionados</h2></center>
@@ -49,19 +50,33 @@ include_once 'clases/lugares.php';
 			?>
 		</div>
     </div>
-    <div id="menu2" class="tab-pane fade">
+    <div id="menu2" class="tab-pane fade" >
       <h3>Piso 1</h3>
+      <div id="lugaresLibres1">
       <?php
       Lugares::GrillaLugares(1); 
       ?>
+      </div>
     </div>
     <div id="menu3" class="tab-pane fade">
-      <h3>Menu 3</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <h3>Piso 2</h3>
+      <div id="lugaresLibres2">
+      <?php
+      Lugares::GrillaLugares(2); 
+      ?>
+      </div>
+    </div>
+     <div id="menu4" class="tab-pane fade">
+      <h3>Piso 3</h3>
+      <div id="lugaresLibres3">
+      <?php
+      Lugares::GrillaLugares(3); 
+      ?>
+      </div>
     </div>
   </div>
 </div>
-
+<!--MODAL DE INGRESAR AUTO-->
 <div class="container">
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -93,6 +108,67 @@ include_once 'clases/lugares.php';
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" onclick="AutoParaIngresar()">Guardar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<!--MODAL DE RETIRAR AUTO-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="modalRetiro" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Retiro Auto</h4>
+        </div>
+        <div class="modal-body" id="modalbody">
+          Patente<br>
+          <input type="text" name="patente_retiro" id="patente_retiro" required><br>
+            Hora de entrada:<br>
+          <input type="text" name="hora_entrada" id="hora_entrada" disabled><br>
+            Hora de salida:<br>
+          <input type="text" name="hora_salida" id="hora_salida" disabled><br>
+            Monto:<br>
+          <input type="text" name="monto" id="monto_salida" disabled><br>
+          <input type="hidden" name="idUser" id="idUser" disabled>
+          <input type="hidden" name="idLugar" id="idLugar" disabled>
+          <input type="hidden" name="hora" id="hora" disabled>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="ConfirmarRetiro()">Confirmar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<!--MODAL DE RETIRAR AUTO POR PATENTE-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="modalRetiroPatente" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Retiro Auto</h4>
+        </div>
+        <div class="modal-body" id="retiroPorPatente">
+          Ingrese Patente:<br>
+          <input type="text" name="patente_retiro" id="patente_a_buscar" required><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="BuscarPatente()">Confirmar</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>

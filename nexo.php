@@ -3,6 +3,7 @@ session_start();
 include_once 'clases/lugares.php';
 include_once 'clases/vehiculo.php';
 include_once 'clases/usuarios.php';
+include_once 'clases/registros.php';
 
 if (isset($_POST["queHago"]))
 {
@@ -76,5 +77,40 @@ if(isset($_POST["marca"]) && isset($_POST["color"]) && isset($_POST["patente"]) 
 	{
 		echo "error";
 	}
+}
+//CARGAR MAPA DE LUGARES***********************************************************************************************************************
+if(isset($_POST["mapaLugares"]))
+{
+	Lugares::GrillaLugares($_POST["mapaLugares"]);
+}
+//RETIRAR VEHICULO*****************************************************************************************************************************
+if(isset($_POST["pat"]) && isset($_POST["iduser"]) && isset($_POST["idlugar"]) && isset($_POST["hora"]) && isset($_POST["monto"]))
+{
+	$rta="inicio";
+	$miRegistro = new Registros($_POST["idlugar"],$_POST["iduser"],$_POST["pat"],$_POST["hora"],time(),$_POST["monto"]);
+
+	if(Registros::IngresarRegistro($miRegistro))
+	{
+		if(Lugares::LiberarLugar($_POST["idlugar"]))
+		{
+			if(Vehiculo::RetirarAuto($_POST["pat"]))
+			{
+				$rta=Vehiculo::TablaEstacionados();
+			}
+			else
+			{
+				$rta = "Error al retirar auto";
+			}
+		}
+		else
+		{
+			$rta = "Error al liberar lugar";
+		}
+	}
+	else
+	{
+		$rta = "Error al ingresar registro";
+	}
+	echo $rta;
 }
 ?>

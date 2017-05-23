@@ -87,7 +87,7 @@ class Lugares
 	#GRILLA LUGARES LIBRES-------------------------------------------------------------------------------------------------------------
 	public static function GrillaLugares($piso)
 	{
-		$inicio ="<table class='table-bordered'>";
+		$inicio ="<table border='2'>";
 		$datos ="";
 		$fin ="</table>";
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
@@ -103,10 +103,10 @@ class Lugares
 			}				
 			if ($linea["ocupado"] != true )
 			{
-				$datos.='<td class="bg-danger">'.$linea["id_lugar"].'</td>';
+				$datos.='<td class="bg-success">'.$linea["id_lugar"].'</td>';
 			}else
 			{
-				$datos.='<td class="bg-success">'.$linea["id_lugar"].'</td>';
+				$datos.='<td class="bg-danger">'.$linea["id_lugar"].'</td>';
 			}
 			$cont++;
 			if($cont == 10)
