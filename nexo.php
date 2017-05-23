@@ -113,4 +113,8 @@ if(isset($_POST["pat"]) && isset($_POST["iduser"]) && isset($_POST["idlugar"]) &
 	}
 	echo $rta;
 }
+if(isset($_POST["mostrar"]))
+{
+	Registros::TraerTablaRegistros();
+}
 ?>

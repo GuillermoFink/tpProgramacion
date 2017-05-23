@@ -67,22 +67,51 @@ class Registros
 		return $resultado;
 	}
 	#ARRAY DE REGISTROS---------------------------------------------------------------------------------------------------------------------------
-	public static function TraerAutosEstacionados()
+	public static function TraerRegistros()
 	{
-		$ListaDeAutos = array();
+		$ListaDeRegistros = array();
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$contenido = $pdo->query("SELECT * FROM autos");
+		$contenido = $pdo->query("SELECT * FROM registros");
 		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
 			{
-				$unAuto = new Vehiculo($linea["patente"],$linea["id_lugar"],$linea["marca"],$linea["color"],$linea["hora"]);
-				array_push($ListaDeAutos, $unAuto);
+				$unRegistro = new Registros($linea["id_lugar"],$linea["id_usuario"],$linea["patente"],$linea["hora_inicio"],$linea["hora_fin"],$linea["monto"]);
+				array_push($ListaDeRegistros, $unRegistro);
 			}				
-		return $ListaDeAutos;
+		return $ListaDeRegistros;
 	}
 	#TABLA REGISTROS------------------------------------------------------------------------------------------------------------------------------
 	public static function TraerTablaRegistros()
 	{
-
+		$inicio = "<table class='table table-hover'>
+						<thead>
+							<tr class='info'>
+								<th>Lugar</th>
+								<th>Usuario</th>
+								<th>Patente</th>
+								<th>Entrada</th>
+								<th>Salida</th>
+								<th>Monto</th>
+							</tr>
+						</thead>";
+		$fin= "</table>";
+		$datos= "";
+		$registros = array();
+		$registros = Registros::TraerRegistros();
+		foreach ($registros as $item)
+		{
+			$entrada = date("d-m-y H:i:s",$item->GetEntrada());
+			$salida = date("d-m-y H:i:s",$item->GetSalida());
+			$datos.="<tr>
+						<td>".$item->GetLugar()."</td>
+						<td>".$item->GetUsuario()."</td>
+						<td>".$item->GetPatente()."</td>
+						<td>".$entrada."</td>
+						<td>".$salida."</td>
+						<td>".$item->GetMonto()."</td>
+					</tr>";
+		}
+		echo $inicio.$datos.$fin;
 	}
+	
 }
 ?>

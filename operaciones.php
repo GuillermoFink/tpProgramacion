@@ -35,7 +35,7 @@ include_once 'clases/lugares.php';
       <h3>Gestion de estacionamiento</h3>
       <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
       <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
-      <button class="btn btn-warning">Estadisticas</button>
+      <button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
       <br><center><h2>Autos Estacionados</h2></center>
       <div id='tablaEstacionados'>

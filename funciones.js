@@ -197,3 +197,18 @@ function ConfirmarRetiro()
 		$("#tablaEstacionados").html(respuesta);
 	});
 }
+function TablaRegistros()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				mostrar: "estadisticas"
+			}
+	});
+	a.done(function(respuesta){
+		
+		$("#tablaEstacionados").html(respuesta);
+	});
+}
