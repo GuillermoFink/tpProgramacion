@@ -23,8 +23,8 @@ include_once 'clases/lugares.php';
 <div class="container">
   <h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</h2>
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Inicio</a></li>
-    <li><a data-toggle="tab" href="#menu1">Usuarios</a></li>
+    <li class="active"><a data-toggle="tab" href="#home" onclick="TablaEstacionados()">Inicio</a></li>
+    <li><a data-toggle="tab" href="#menu1" onclick="TablaUsuarios()">Usuarios</a></li>
     <li><a data-toggle="tab" href="#menu2" onclick="GrillaLugares(1)">Piso 1</a></li>
     <li><a data-toggle="tab" href="#menu3" onclick="GrillaLugares(2)">Piso 2</a></li>
     <li><a data-toggle="tab" href="#menu4" onclick="GrillaLugares(3)">Piso 3</a></li>
@@ -37,7 +37,7 @@ include_once 'clases/lugares.php';
       <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
       <button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
-      <br><center><h2>Autos Estacionados</h2></center>
+      <br><center><h2 id="titulo">Autos Estacionados</h2></center>
       <div id='tablaEstacionados'>
       	<?php Vehiculo::TablaEstacionados();?>
       </div>
@@ -168,7 +168,7 @@ include_once 'clases/lugares.php';
           <input type="text" name="patente_retiro" id="patente_a_buscar" required><br>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" onclick="BuscarPatente()">Confirmar</button>
+          <button type="button" class="btn btn-success" onclick="RetirarPorPatente()">Confirmar</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>

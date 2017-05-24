@@ -148,8 +148,29 @@ class Vehiculo
 	}
 	public static function CalcularMonto($tiempo)
 	{
-		$estadia = time()-$tiempo;
-		$horas = ($estadia/60)/60;
+		$actual = time();
+		$tiempo = $actual - $tiempo;
+		$horas = round(($tiempo/60)/60,2);
+		$monto = $horas*10;
+		return $monto;
+	}
+	public static function TraerAutoPorPatente($patente)
+	{
+		# LLEGA BIEN $respuesta = $patente;
+		$respuesta="Patente no encontrada";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("SELECT patente,id_lugar,hora  FROM autos WHERE patente=:pat");
+		$db->bindValue(':pat',$patente);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+			{
+				$monto = Vehiculo::CalcularMonto($linea["hora"]);
+				$patente = $linea["patente"];
+				$lugar = $linea["id_lugar"];
+				$hora = $linea["hora"];
+				$respuesta = $_SESSION["id"]."*".$patente."*".$lugar."*".$hora."*".$monto;
+			}				
+		return $respuesta;
 	}	
 }
 ?>

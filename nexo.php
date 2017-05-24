@@ -115,6 +115,25 @@ if(isset($_POST["pat"]) && isset($_POST["iduser"]) && isset($_POST["idlugar"]) &
 }
 if(isset($_POST["mostrar"]))
 {
-	Registros::TraerTablaRegistros();
+	switch ($_POST["mostrar"]) 
+	{
+		case 'estadisticas':
+			Registros::TraerTablaRegistros();
+			break;
+		case 'vehiculos':
+			Vehiculo::TablaEstacionados();
+			break;
+		case 'usuarios':
+			Usuario::TablaUsuarios();
+			break;
+		default:
+			# code...
+			break;
+	}
+	
+}
+if(isset($_POST["retiroPorPatente"]))
+{
+	echo Vehiculo::TraerAutoPorPatente($_POST["retiroPorPatente"]);
 }
 ?>

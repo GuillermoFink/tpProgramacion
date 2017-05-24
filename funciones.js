@@ -195,6 +195,7 @@ function ConfirmarRetiro()
 	{
 		$("#modalRetiro").modal("hide");
 		$("#tablaEstacionados").html(respuesta);
+		alert("Retiro Exitoso");
 	});
 }
 function TablaRegistros()
@@ -210,5 +211,65 @@ function TablaRegistros()
 	a.done(function(respuesta){
 		
 		$("#tablaEstacionados").html(respuesta);
+		$("#titulo").html("Registros");
+	});
+}
+function TablaEstacionados()
+{
+	var a=$.ajax({
+		type:'post',
+		url: 'nexo.php',
+		data:
+			{
+				mostrar: "vehiculos" 
+			}
+	});
+	a.done(function(respuesta)
+	{
+		$("#tablaEstacionados").html(respuesta);
+		$("#titulo").html("Autos Estacionados");
+	});
+}
+function TablaUsuarios()
+{
+	var a=$.ajax({
+		type:'post',
+		url: 'nexo.php',
+		data:
+			{
+				mostrar: "usuarios" 
+			}
+	});
+	a.done(function(respuesta)
+	{
+		$("#tablaEstacionados").html(respuesta);
+		$("#titulo").html("Usuarios");
+	});
+}
+function RetirarPorPatente()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'nexo.php',
+		data:
+			{
+				retiroPorPatente: $("#patente_a_buscar").val()
+			}
+	});
+	a.done(function(respuesta)
+	{
+		$("#modalRetiroPatente").modal("hide");
+		//alert(respuesta);
+		var miRespuesta = respuesta.split('*');
+		var entrada = new Date(parseInt(miRespuesta[3]));
+		var salida = new Date();
+		$("#patente_retiro").val(miRespuesta[1]);
+		$("#hora_entrada").val(entrada);
+		$("#monto_salida").val(miRespuesta[4]);
+		$("#hora_salida").val(salida);
+		$("#idUser").val(miRespuesta[0]);
+		$("#idLugar").val(miRespuesta[2]);
+		$("#hora").val(miRespuesta[3]);
+		$("#modalRetiro").modal("show");
 	});
 }
