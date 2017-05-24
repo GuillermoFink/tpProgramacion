@@ -162,6 +162,7 @@ function GrillaLugares(piso)
 }
 function RetirarAuto()
 {
+	$("#patente_a_buscar").val("");
 	$("#modalRetiroPatente").modal("show");
 }
 function RetirarVehiculo(idUsuario,patente,hora,monto,lugar)
