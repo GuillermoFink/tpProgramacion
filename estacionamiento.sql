@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-05-2017 a las 13:06:38
+-- Tiempo de generación: 25-05-2017 a las 00:51:19
 -- Versión del servidor: 10.1.19-MariaDB
--- Versión de PHP: 5.6.24
+-- Versión de PHP: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,7 +41,10 @@ CREATE TABLE `autos` (
 --
 
 INSERT INTO `autos` (`id_lugar`, `patente`, `marca`, `color`, `hora`) VALUES
-(105, 'AAB 123', 'audi', 'rojo', 1495053345);
+(105, 'PPR 321', 'Audi', 'Blanco', 1495660316),
+(108, 'AA 332 PP', 'Chevrolet', 'Azul', 1495569308),
+(204, 'KKK 000', 'Ford', 'Rojo', 1495666018),
+(305, 'KKE 223', 'Dodge', 'Azul', 1495578361);
 
 -- --------------------------------------------------------
 
@@ -62,13 +65,13 @@ CREATE TABLE `lugares` (
 
 INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 (1, 101, 0, 1),
-(1, 102, 0, 1),
+(1, 102, 1, 1),
 (1, 103, 0, 1),
 (1, 104, 0, 0),
 (1, 105, 1, 0),
 (1, 106, 0, 0),
 (1, 107, 0, 0),
-(1, 108, 0, 0),
+(1, 108, 1, 0),
 (1, 109, 0, 0),
 (1, 110, 0, 0),
 (1, 111, 0, 0),
@@ -94,7 +97,7 @@ INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 (2, 201, 0, 1),
 (2, 202, 0, 1),
 (2, 203, 0, 1),
-(2, 204, 0, 0),
+(2, 204, 1, 0),
 (2, 205, 0, 0),
 (2, 206, 0, 0),
 (2, 207, 0, 0),
@@ -125,7 +128,7 @@ INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 (3, 302, 0, 1),
 (3, 303, 0, 1),
 (3, 304, 0, 0),
-(3, 305, 0, 0),
+(3, 305, 1, 0),
 (3, 306, 0, 0),
 (3, 307, 0, 0),
 (3, 308, 0, 0),
@@ -161,11 +164,20 @@ INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 CREATE TABLE `registros` (
   `id_lugar` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `patente` int(11) NOT NULL,
-  `hora_inicio` date NOT NULL,
-  `hora_fin` date NOT NULL,
+  `patente` varchar(11) NOT NULL,
+  `hora_inicio` bigint(20) NOT NULL,
+  `hora_fin` bigint(20) NOT NULL,
   `monto` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `registros`
+--
+
+INSERT INTO `registros` (`id_lugar`, `id_usuario`, `patente`, `hora_inicio`, `hora_fin`, `monto`) VALUES
+(109, 3, 'KKK 222', 1495569602, 1495660326, 252),
+(110, 3, 'ppp222', 1495569484, 1495665393, 266.4),
+(112, 2, 'AAA 123', 1495664854, 1495666190, 3.7);
 
 -- --------------------------------------------------------
 
@@ -189,21 +201,14 @@ INSERT INTO `registro_usuarios` (`id_usuario`, `login`, `logout`) VALUES
 (1, '0000-00-00', '0000-00-00'),
 (1, '0000-00-00', '0000-00-00'),
 (1, '20-5-2017  0:32', '20-5-2017  0:32'),
-(2, '1-1-1970  1:0', '20-5-2017  3:39'),
-(3, '20-5-2017  3:44', '20-5-2017  3:44'),
-(3, '20-5-2017  3:55', '20-5-2017  3:55'),
-(3, '20-5-2017  3:56', '20-5-2017  3:56'),
-(3, '20-5-2017  20:31', '20-5-2017  20:37'),
-(3, '20-5-2017  20:37', '20-5-2017  21:31'),
-(3, '20-5-2017  21:44', '20-5-2017  21:48'),
-(3, '20-5-2017  21:50', '20-5-2017  21:53'),
-(3, '20-5-2017  21:53', '20-5-2017  21:53'),
-(3, '20-5-2017  21:53', '20-5-2017  21:54'),
-(3, '20-5-2017  21:56', '20-5-2017  21:57'),
-(2, '20-5-2017  21:58', '20-5-2017  21:58'),
-(3, '20-5-2017  22:1', '20-5-2017  22:33'),
-(3, '20-5-2017  22:33', '20-5-2017  22:35'),
-(3, '20-5-2017  22:35', '20-5-2017  22:35');
+(2, '22-5-2017  22:22', '22-5-2017  22:28'),
+(3, '22-5-2017  22:28', '22-5-2017  22:38'),
+(2, '22-5-2017  22:39', '22-5-2017  23:3'),
+(3, '23-5-2017  21:47', '23-5-2017  22:12'),
+(3, '23-5-2017  22:12', '24-5-2017  0:19'),
+(2, '24-5-2017  22:5', '24-5-2017  22:12'),
+(3, '24-5-2017  23:4', '25-5-2017  0:29'),
+(3, '25-5-2017  0:32', '25-5-2017  0:49');
 
 -- --------------------------------------------------------
 
@@ -226,7 +231,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `password`, `nombre`, `apellido`, `tipo`, `turno`) VALUES
 (2, 'xxx', 'pedro', 'gutierrez', 'user', 'noche'),
-(3, 'asd', 'guillo', 'fink', 'admin', 'mañana');
+(3, 'asd', 'gui', 'fink', 'admin', 'admin');
 
 --
 -- Índices para tablas volcadas
