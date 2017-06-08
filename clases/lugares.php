@@ -59,7 +59,7 @@ class Lugares
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
 		$db = $pdo->prepare("UPDATE lugares SET ocupado=:ocupado WHERE id_lugar=:lugar");
 		$db->bindValue(':ocupado',true);
-		$db->bindValue('lugar',$id);
+		$db->bindValue(':lugar',$id);
 		if ($db->execute())
 		{
 			$rta = true;

@@ -1,38 +1,74 @@
 	<?php
-		include_once "clases/lugares.php";
-		$piso=1;
-		$inicio="<select>";
-		$fin = "</select>";
-		$datos = "";
-		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$db = $pdo->prepare("SELECT * FROM lugares WHERE id_piso = :piso");
-		$db->bindValue(':piso',$piso);
-		$db->execute();
-		while($linea = $db->fetch(PDO::FETCH_ASSOC))
-		{
-			if ($linea["ocupado"] != true)
-			{
-				$datos.="<option>".$linea["id_lugar"]."</option>";
-			}
-		}
-		echo $inicio.$datos.$fin;
-	/*
-		include_once 'clases/usuarios.php';
-		$lalala = time();
-		echo Usuario::CerrarSesion(1,$lalala);
-*/
-
-
-		#FORMATEO DE HORA------------------------------------------------------------------------------------------------
-		/*
-		$hora = time();
-		$lala2 = getdate($hora);
-		$dia = $lala2["mday"];
-		$mes = $lala2["mon"];
-		$anio = $lala2["year"];
-		$hora = $lala2["hours"];
-		$minuto = $lala2["minutes"];
-		$lala = date($dia."-".$mes."-".$anio."  ".$hora.":".$minuto);
-		echo $lala;
-		*/
+	if(isset($_POST["check"]))
+	{
+		echo $_POST["check"];
+	}
 	?>
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+  <script type="text/javascript" src="funciones.js"></script>
+   <!--<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="funciones.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+</head>
+<body>
+CHECK<input type="checkbox" name="Prueba" id="check"><br>
+<button onclick="PruebaCheck()">BOTON</button>
+<!--<div id="course2">
+
+              <select class="selectpicker" data-style="btn-primary" data-width="500px">
+              <option>Mustard</option>
+              <option>Ketchup</option>
+              <option>Relish</option>
+              </select>
+
+         
+
+                 
+
+            </div>-->
+
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+                 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+        
+<div class="container">
+  <h2>Dynamic Tabs</h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>HOME</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

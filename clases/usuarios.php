@@ -151,6 +151,7 @@ class Usuario
 			$_SESSION["turno"] = $unUsuario->GetTurno();
 			$_SESSION["tipo"] = $unUsuario->GetTipo();
 			$_SESSION["login"] = time();
+			$_SESSION["apellido"] = $unUsuario->GetApellido();
 			$rta =true;			
 		}
 		return $rta;

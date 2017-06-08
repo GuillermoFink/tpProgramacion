@@ -14,14 +14,42 @@ include_once 'clases/lugares.php';
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="funciones.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+  <style type="text/css">
+    .bgimg
+          {
+            background-image: url('./fotos/header-bg.jpg');
+            height: 100%; 
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+    .fondotabla
+              {
+                background-image: url('./fotos/fondotabla.jpg');
+                    height: 110%;
+                    width: 100%;
+                    /* Center and scale the image nicely */
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+              }      
+  </style>
 
 </head>
-<body>
+<body class="fondotabla">
+<div class="bgimg"><h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</h2>
+  <div align="left">
+    <button class="btn btn-success">Preferencias</button>
+    <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
+  </div>
+</div>
 
 <div class="container">
-  <h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</h2>
+  
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home" onclick="TablaEstacionados()">Inicio</a></li>
     <li><a data-toggle="tab" href="#menu1" onclick="TablaUsuarios()">Usuarios</a></li>
@@ -33,11 +61,14 @@ include_once 'clases/lugares.php';
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <h3>Gestion de estacionamiento</h3>
+      <button class="btn btn-info" onclick="TablaEstacionados()">Inicio</button>
       <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
       <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
       <button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>
+      <button class="btn" onclick="">Filtros</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
       <br><center><h2 id="titulo">Autos Estacionados</h2></center>
+      <div id ="filtros"></div>
       <div id='tablaEstacionados'>
       	<?php Vehiculo::TablaEstacionados();?>
       </div>
