@@ -18,7 +18,7 @@ function Login()
 		}
 		else
 		{
-			alert("*"+respuesta);
+			alert(respuesta);
 			window.location.href = "index.php";
 		}
 	});
@@ -273,4 +273,8 @@ function RetirarPorPatente()
 		$("#hora").val(miRespuesta[3]);
 		$("#modalRetiro").modal("show");
 	});
+}
+function AltaUsuario()
+{	
+	window.location.href = "altausuario.php";
 }

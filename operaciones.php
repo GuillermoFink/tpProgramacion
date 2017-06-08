@@ -75,6 +75,7 @@ include_once 'clases/lugares.php';
     </div>
     <div id="menu1" class="tab-pane fade">
       <h3>Usuarios</h3>
+      <button class="btn btn-success" onclick="AltaUsuario()">Nuevo Usuario</button>
       	<div id='tablausuarios'>
       		<?php
 				Usuario::TablaUsuarios();
