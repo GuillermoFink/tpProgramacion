@@ -122,7 +122,7 @@ function AutoParaIngresar()
 {
 	var a=$.ajax({
 		type: 'post',
-		url: 'nexo.php',
+		url: 'http://localhost/git/ingresarAuto',
 		data:
 			{
 				patente: $("#patente").val(),
@@ -133,7 +133,7 @@ function AutoParaIngresar()
 	});
 	a.done(function(respuesta)
 	{
-		if (respuesta != "error")
+		if (respuesta != false)
 		{
 			alert("Auto ingresado correctamente");
 			$("#tablaEstacionados").html(respuesta);
@@ -145,6 +145,33 @@ function AutoParaIngresar()
 		}
 	});
 }
+// function AutoParaIngresar()
+// {
+// 	var a=$.ajax({
+// 		type: 'post',
+// 		url: 'nexo.php',
+// 		data:
+// 			{
+// 				patente: $("#patente").val(),
+// 				marca: $("#marca").val(),
+// 				color: $("#color").val(),
+// 				lugar: $("#lugaresLibres").val()
+// 			}
+// 	});
+// 	a.done(function(respuesta)
+// 	{
+// 		if (respuesta != "error")
+// 		{
+// 			alert("Auto ingresado correctamente");
+// 			$("#tablaEstacionados").html(respuesta);
+// 			$("#myModal").modal("hide");
+// 		}else
+// 		{
+// 			alert("Error al ingresar");
+// 			$("#myModal").modal("hide");
+// 		}
+// 	});
+// }
 function GrillaLugares(piso)
 {
 	var a=$.ajax({
@@ -218,6 +245,20 @@ function TablaRegistros()
 function TablaEstacionados()
 {
 	var a=$.ajax({
+		type:'get',
+		url: 'http://localhost/git/traertablaestacionados'
+	});
+	a.done(function(respuesta)
+	{	
+		console.log(respuesta);
+		$("#tablaEstacionados").html(respuesta);
+		$("#titulo").html("Autos Estacionados");
+	});
+}
+//ORIGINAL
+/*function TablaEstacionados()
+{
+	var a=$.ajax({
 		type:'post',
 		url: 'nexo.php',
 		data:
@@ -230,7 +271,7 @@ function TablaEstacionados()
 		$("#tablaEstacionados").html(respuesta);
 		$("#titulo").html("Autos Estacionados");
 	});
-}
+}*/
 function TablaUsuarios()
 {
 	var a=$.ajax({

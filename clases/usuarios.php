@@ -218,7 +218,9 @@ class Usuario
 								<th>Tipo</th>";
 								if($_SESSION["tipo"] == "admin")
 								{
-									$inicio.="<th>Accion</th>";	
+									$inicio.="<th>Accion</th>
+												</tr>
+											</thead>";	
 								}else
 									{
 										$inicio.="</tr>

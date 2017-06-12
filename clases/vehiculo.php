@@ -74,7 +74,7 @@ class Vehiculo
 		$db->bindValue(':idLugar',$obj->GetId());
 		if($db->execute())
 		{
-			$resultado = TRUE;
+			$resultado = Vehiculo::TablaEstacionados();
 		}
 		return $resultado;		
 	}
