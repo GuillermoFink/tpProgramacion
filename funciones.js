@@ -106,7 +106,7 @@ function LugaresLibres()
 {
 	var a=$.ajax({
 		type: 'post',
-		url: 'nexo.php',
+		url: 'http://localhost/git/traerLugaresLibres',
 		data:
 			{
 				piso: $("#piso").val()
@@ -133,7 +133,7 @@ function AutoParaIngresar()
 	});
 	a.done(function(respuesta)
 	{
-		alert(respuesta)
+		//alert(respuesta)
 		if (respuesta != false)
 		{
 			alert("Auto ingresado correctamente");
@@ -222,7 +222,7 @@ function ConfirmarRetiro()
 	});
 	a.done(function(respuesta)
 	{
-		alert(respuesta)
+		//alert(respuesta);
 		$("#modalRetiro").modal("hide");
 		$("#tablaEstacionados").html(respuesta);
 		alert("Retiro Exitoso");
@@ -275,7 +275,7 @@ function TablaEstacionados()
 	});
 	a.done(function(respuesta)
 	{	
-		console.log(respuesta);
+		//console.log(respuesta);
 		$("#tablaEstacionados").html(respuesta);
 		$("#titulo").html("Autos Estacionados");
 	});

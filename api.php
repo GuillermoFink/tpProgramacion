@@ -15,6 +15,14 @@ $app->get('/traertablaestacionados',function($request,$response)
 
 		return $response;
 	});
+$app->post('/traerLugaresLibres',function($request,$response)
+	{
+		$pisos = $request->getParsedBody();
+		$response->write(Lugares::LugaresLibres($pisos["piso"]));
+
+		return $response;
+
+	});
 $app->post('/ingresarAuto',function($request,$response)
 	{
 		$datos = $request->getParsedBody();
@@ -30,7 +38,9 @@ $app->delete('/RetirarAuto',function($request,$response)
 		Registros::IngresarRegistro($unRegistro);
 		Lugares::LiberarLugar($datos["idlugar"]);
 		Vehiculo::RetirarAuto($datos["pat"]);
-		$response->getBody()->write(Vehiculo::TablaEstacionados());
+		$respuesta = Vehiculo::TablaEstacionados();
+		$response->write($respuesta);
+		return $response;
 	});
 $app->run();
 ?>
