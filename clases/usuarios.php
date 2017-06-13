@@ -156,29 +156,6 @@ class Usuario
 		}
 		return $rta;
 	}
-
-	/*public static function LoginUser($usuario,$password)
-	{
-		$misUsuarios = array();
-		$misUsuarios = Usuario::TraerUsuarios();
-		$rta = FALSE;
-		foreach ($misUsuarios as $users)
-			{
-				if($users->GetNombre()==$usuario && $users->GetPassword()==$password)
-				{
-					$_SESSION["id"]= $users->GetId();
-					$_SESSION["nombre"] = $users->GetNombre();
-					$_SESSION["turno"] = $users->GetTurno();
-					$_SESSION["tipo"] = $users->GetTipo();
-					$_SESSION["login"] = time();
-				}
-				if(isset($_SESSION["nombre"]) && isset($_SESSION["tipo"]))
-				{
-					$rta = TRUE;
-				}
-			}
-		return $rta;	
-	}*/
 	public static function CerrarSesion($id,$login)
 	{
 		$rta = FALSE;

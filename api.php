@@ -37,6 +37,13 @@ $app->post('/ingresarAuto',function($request,$response)
 
 		return $response;
 	});
+$app->post('/cerrarSesion',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$response->write(Usuario::CerrarSesion($datos["cerrarSesion"],$datos["tiempo"]));
+
+		return $response;
+	});
 $app->delete('/RetirarAuto',function($request,$response)
 	{
 		$datos = $request->getParsedBody();

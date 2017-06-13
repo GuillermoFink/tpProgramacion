@@ -38,24 +38,6 @@ function LlenarBase()
 		alert(respuesta);
 	});
 }
-function AltaAuto()
-{
-	var a=$.ajax({
-		type: 'post',
-		url: 'nexo.php',
-		data:
-			{
-				pat: "AAB 123",
-				marca: "audi",
-				color: "rojo",
-				lugar: "105"
-			}	
-	});
-	a.done(function(respuesta)
-	{
-		alert(respuesta);
-	});
-}
 function EliminarUsuario(id)
 {
 	var a=$.ajax({
@@ -82,7 +64,7 @@ function CerrarSesion(id_usuario,login)
 {
 	var a=$.ajax({
 		type: 'post',
-		url: 'nexo.php',
+		url: 'http://localhost/git/cerrarSesion',
 		data: 
 		{
 			cerrarSesion: id_usuario,
