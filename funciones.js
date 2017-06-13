@@ -132,7 +132,7 @@ function GrillaLugares(piso)
 {
 	var a=$.ajax({
 		type: 'post',
-		url: 'nexo.php',
+		url: 'http://localhost/git/grillaLugares',
 		data:
 			{
 				mapaLugares: piso

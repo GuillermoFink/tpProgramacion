@@ -59,7 +59,13 @@ $app->post('/retiroPorPatente',function($request,$response)
 
 		return $response;
 	});
+$app->post('/grillaLugares',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$response->write(Lugares::GrillaLugares($datos["mapaLugares"]));
 
+		return $response;
+	});
 //DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)
 	{
