@@ -9,6 +9,7 @@ require_once "clases/vehiculo.php";
 
 $app = new \Slim\App;
 
+//GETS****************************************************************************************************************************
 $app->get('/traertablaestacionados',function($request,$response)
 	{
 		$response->getbody()->write(Vehiculo::TablaEstacionados());
@@ -27,13 +28,14 @@ $app->get('/traerTablaUsuarios',function($request,$response)
 
 		return $response;
 	});
+
+//POSTS****************************************************************************************************************************
 $app->post('/traerLugaresLibres',function($request,$response)
 	{
 		$pisos = $request->getParsedBody();
 		$response->write(Lugares::LugaresLibres($pisos["piso"]));
 
 		return $response;
-
 	});
 $app->post('/ingresarAuto',function($request,$response)
 	{
@@ -50,6 +52,15 @@ $app->post('/cerrarSesion',function($request,$response)
 
 		return $response;
 	});
+$app->post('/retiroPorPatente',function($request,$response)
+	{
+		$datos= $request->getParsedBody();
+		$response->write(Vehiculo::TraerAutoPorPatente($datos["retiroPorPatente"]));
+
+		return $response;
+	});
+
+//DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)
 	{
 		$datos = $request->getParsedBody();

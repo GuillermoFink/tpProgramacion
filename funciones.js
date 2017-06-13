@@ -224,7 +224,7 @@ function RetirarPorPatente()
 {
 	var a=$.ajax({
 		type: 'post',
-		url: 'nexo.php',
+		url: 'http://localhost/git/retiroPorPatente',
 		data:
 			{
 				retiroPorPatente: $("#patente_a_buscar").val()
