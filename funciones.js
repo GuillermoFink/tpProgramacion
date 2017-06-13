@@ -41,8 +41,8 @@ function LlenarBase()
 function EliminarUsuario(id)
 {
 	var a=$.ajax({
-		type: 'post',
-		url: 'nexo.php',
+		type: 'delete',
+		url: 'http://localhost/git/EliminarUsuario',
 		data:
 			{
 				idParaEliminar: id 

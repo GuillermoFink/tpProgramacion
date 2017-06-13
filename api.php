@@ -79,5 +79,20 @@ $app->delete('/RetirarAuto',function($request,$response)
 		$response->write($respuesta);
 		return $response;
 	});
+$app->delete('/EliminarUsuario',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		if (Usuario::BajaUsuario($datos["idParaEliminar"]))
+		{
+			$respuesta = Usuario::TablaUsuarios();
+		}
+		else
+		{
+			$respuesta = "error";
+		}
+
+		$response->write($respuesta);
+		return $response;
+	});
 $app->run();
 ?>
