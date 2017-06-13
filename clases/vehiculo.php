@@ -1,7 +1,7 @@
 <?php
-/**
-* 
-*/
+include_once "lugares.php";
+include_once "registros.php";
+include_once "usuarios.php";
 class Vehiculo
 {
 	#ATRIBUTOS-----------------------------------------------------------------------
@@ -72,7 +72,7 @@ class Vehiculo
 		$db->bindValue(':color',$obj->GetColor());
 		$db->bindValue(':hora',$obj->GetHora());
 		$db->bindValue(':idLugar',$obj->GetId());
-		if($db->execute())
+		if($db->execute() && Lugares::OcuparLugar($obj->GetId()))
 		{
 			$resultado = Vehiculo::TablaEstacionados();
 		}
@@ -88,7 +88,7 @@ class Vehiculo
 		$db->bindValue(':patente',$patente);
 		if ($db->execute())
 		{
-			$resultado = TRUE;
+			$resultado = Vehiculo::TablaEstacionados();
 		}
 		return $resultado;
 	}

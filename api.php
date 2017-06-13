@@ -23,5 +23,14 @@ $app->post('/ingresarAuto',function($request,$response)
 
 		return $response;
 	});
+$app->delete('/RetirarAuto',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$unRegistro = new Registros($datos["idlugar"],$datos["iduser"],$datos["pat"],$datos["hora"],time(),$datos["monto"]);
+		Registros::IngresarRegistro($unRegistro);
+		Lugares::LiberarLugar($datos["idlugar"]);
+		Vehiculo::RetirarAuto($datos["pat"]);
+		$response->getBody()->write(Vehiculo::TablaEstacionados());
+	});
 $app->run();
 ?>

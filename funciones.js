@@ -133,6 +133,7 @@ function AutoParaIngresar()
 	});
 	a.done(function(respuesta)
 	{
+		alert(respuesta)
 		if (respuesta != false)
 		{
 			alert("Auto ingresado correctamente");
@@ -208,6 +209,29 @@ function RetirarVehiculo(idUsuario,patente,hora,monto,lugar)
 function ConfirmarRetiro()
 {
 	var a=$.ajax({
+		type: 'delete',
+		url: 'http://localhost/git/RetirarAuto',
+		data:
+			{
+				pat: $("#patente_retiro").val(),
+				iduser: $("#idUser").val(),
+				idlugar:$("#idLugar").val(),
+				hora: $("#hora").val(),
+				monto:$("#monto_salida").val()
+			}
+	});
+	a.done(function(respuesta)
+	{
+		alert(respuesta)
+		$("#modalRetiro").modal("hide");
+		$("#tablaEstacionados").html(respuesta);
+		alert("Retiro Exitoso");
+	});
+}
+/* ORIGINAL
+function ConfirmarRetiro()
+{
+	var a=$.ajax({
 		type: 'post',
 		url: 'nexo.php',
 		data:
@@ -226,6 +250,7 @@ function ConfirmarRetiro()
 		alert("Retiro Exitoso");
 	});
 }
+*/
 function TablaRegistros()
 {
 	var a=$.ajax({
