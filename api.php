@@ -15,6 +15,12 @@ $app->get('/traertablaestacionados',function($request,$response)
 
 		return $response;
 	});
+$app->get('/traerTablaRegistros',function($request,$response)
+	{
+		$response->getbody()->write(Registros::TraerTablaRegistros());
+
+		return $response;
+	});
 $app->post('/traerLugaresLibres',function($request,$response)
 	{
 		$pisos = $request->getParsedBody();

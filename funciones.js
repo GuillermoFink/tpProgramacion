@@ -146,33 +146,6 @@ function AutoParaIngresar()
 		}
 	});
 }
-// function AutoParaIngresar()
-// {
-// 	var a=$.ajax({
-// 		type: 'post',
-// 		url: 'nexo.php',
-// 		data:
-// 			{
-// 				patente: $("#patente").val(),
-// 				marca: $("#marca").val(),
-// 				color: $("#color").val(),
-// 				lugar: $("#lugaresLibres").val()
-// 			}
-// 	});
-// 	a.done(function(respuesta)
-// 	{
-// 		if (respuesta != "error")
-// 		{
-// 			alert("Auto ingresado correctamente");
-// 			$("#tablaEstacionados").html(respuesta);
-// 			$("#myModal").modal("hide");
-// 		}else
-// 		{
-// 			alert("Error al ingresar");
-// 			$("#myModal").modal("hide");
-// 		}
-// 	});
-// }
 function GrillaLugares(piso)
 {
 	var a=$.ajax({
@@ -228,38 +201,11 @@ function ConfirmarRetiro()
 		alert("Retiro Exitoso");
 	});
 }
-/* ORIGINAL
-function ConfirmarRetiro()
-{
-	var a=$.ajax({
-		type: 'post',
-		url: 'nexo.php',
-		data:
-			{
-				pat: $("#patente_retiro").val(),
-				iduser: $("#idUser").val(),
-				idlugar:$("#idLugar").val(),
-				hora: $("#hora").val(),
-				monto:$("#monto_salida").val()
-			}
-	});
-	a.done(function(respuesta)
-	{
-		$("#modalRetiro").modal("hide");
-		$("#tablaEstacionados").html(respuesta);
-		alert("Retiro Exitoso");
-	});
-}
-*/
 function TablaRegistros()
 {
 	var a=$.ajax({
-		type: 'post',
-		url: 'nexo.php',
-		data:
-			{
-				mostrar: "estadisticas"
-			}
+		type: 'get',
+		url: 'http://localhost/git/traerTablaRegistros',
 	});
 	a.done(function(respuesta){
 		
@@ -280,23 +226,6 @@ function TablaEstacionados()
 		$("#titulo").html("Autos Estacionados");
 	});
 }
-//ORIGINAL
-/*function TablaEstacionados()
-{
-	var a=$.ajax({
-		type:'post',
-		url: 'nexo.php',
-		data:
-			{
-				mostrar: "vehiculos" 
-			}
-	});
-	a.done(function(respuesta)
-	{
-		$("#tablaEstacionados").html(respuesta);
-		$("#titulo").html("Autos Estacionados");
-	});
-}*/
 function TablaUsuarios()
 {
 	var a=$.ajax({
