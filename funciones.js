@@ -211,12 +211,8 @@ function TablaEstacionados()
 function TablaUsuarios()
 {
 	var a=$.ajax({
-		type:'post',
-		url: 'nexo.php',
-		data:
-			{
-				mostrar: "usuarios" 
-			}
+		type:'get',
+		url: 'http://localhost/git/traerTablaUsuarios'
 	});
 	a.done(function(respuesta)
 	{

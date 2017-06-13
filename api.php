@@ -21,6 +21,12 @@ $app->get('/traerTablaRegistros',function($request,$response)
 
 		return $response;
 	});
+$app->get('/traerTablaUsuarios',function($request,$response)
+	{
+		$response->getBody()->write(Usuario::TablaUsuarios());
+
+		return $response;
+	});
 $app->post('/traerLugaresLibres',function($request,$response)
 	{
 		$pisos = $request->getParsedBody();
