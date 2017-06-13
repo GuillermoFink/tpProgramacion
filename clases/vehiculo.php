@@ -157,7 +157,7 @@ class Vehiculo
 	public static function TraerAutoPorPatente($patente)
 	{
 		# LLEGA BIEN $respuesta = $patente;
-		$respuesta="Patente no encontrada";
+		$respuesta="error";
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
 		$db = $pdo->prepare("SELECT patente,id_lugar,hora  FROM autos WHERE patente=:pat");
 		$db->bindValue(':pat',$patente);

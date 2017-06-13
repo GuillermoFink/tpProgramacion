@@ -66,6 +66,7 @@ $app->post('/grillaLugares',function($request,$response)
 
 		return $response;
 	});
+
 //DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)
 	{
