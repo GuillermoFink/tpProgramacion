@@ -65,7 +65,7 @@ include_once 'clases/lugares.php';
       <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
       <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
       <button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>
-      <button class="btn" onclick="">Filtros</button>
+      <button class="btn" onclick="TablaFiltros()">Filtros</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
       <br><center><h2 id="titulo">Autos Estacionados</h2></center>
       <div id ="filtros"></div>

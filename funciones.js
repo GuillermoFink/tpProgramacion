@@ -195,6 +195,33 @@ function TablaRegistros()
 		$("#titulo").html("Registros");
 	});
 }
+function TablaFiltros()
+{
+	var a=$.ajax({
+		type: 'get',
+		url: 'http://localhost/git/traerFiltros',
+	});
+	a.done(function(respuesta){
+		
+		$("#tablaEstacionados").html(respuesta);
+		$("#titulo").html("Filtros");
+	});
+}
+function TablaFiltrada()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'http://localhost/git/datosFiltrados',
+		data:
+			{
+				filtro: $("#selectFiltro").val()
+			}
+	});
+	a.done(function(respuesta){
+			//alert(respuesta);
+			$("#resultadoFiltro").html(respuesta);
+	});
+}
 function TablaEstacionados()
 {
 	var a=$.ajax({

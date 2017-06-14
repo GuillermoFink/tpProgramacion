@@ -28,7 +28,12 @@ $app->get('/traerTablaUsuarios',function($request,$response)
 
 		return $response;
 	});
+$app->get('/traerFiltros',function($request,$response)
+	{
+		$response->getBody()->write(Registros::TablaFiltros());
 
+		return $response;
+	});
 //POSTS****************************************************************************************************************************
 $app->post('/traerLugaresLibres',function($request,$response)
 	{
@@ -63,6 +68,14 @@ $app->post('/grillaLugares',function($request,$response)
 	{
 		$datos = $request->getParsedBody();
 		$response->write(Lugares::GrillaLugares($datos["mapaLugares"]));
+
+		return $response;
+	});
+$app->post('/datosFiltrados',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$filtro = $datos["filtro"];
+		$response->write(Registros::RegistrosFiltrados($filtro));
 
 		return $response;
 	});

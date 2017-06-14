@@ -112,6 +112,40 @@ class Registros
 		}
 		echo $inicio.$datos.$fin;
 	}
+	public static function TablaFiltros()
+	{
+		$datos= "<div>
+					<select id='selectFiltro' onchange='TablaFiltrada()'>
+						<option>Usuario</option>
+						<option selected='selected'>Cochera</option>
+						<option>Cochera menos usada</option>
+					</select>
+				</div>
+				<div id='resultadoFiltro'>
+
+				</div>";
+
+		return $datos;
+	}
+	public static function RegistrosFiltrados($condicion)
+	{
+		$datos= "<h1>".$condicion."</h1>
+				<table class='table table-hover'>
+				<th>
+					<tr class='danger'>
+					<td>HOLA</td>
+					<td>PRUEBo</td>
+				</th>
+				<tbody>
+					<tr>
+						<td>UNAS</td>
+						<td>COSAS</td>
+					</tr>
+				</tbody>
+				</thead>
+			</table>";
+		echo $datos;
+	}
 	
 }
 ?>
