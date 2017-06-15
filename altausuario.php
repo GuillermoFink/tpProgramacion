@@ -18,14 +18,6 @@ session_start();
   <label id="icon" for="name"><i class="icon-shield"></i></label>
   <input type="password" name="name" id="name" placeholder="Password" required/>
   <center>Turnos</center>
-  <!--<div class="gender">
-	  <input type="radio" value="Mañana" id="male" name="gender" checked/>
-	  <label for="male" class="radio" chec>Man</label>
-	  <input type="radio" value="None" id="female" name="gender" />
-	  <label for="female" class="radio">Tar</label>
-	  <input type="radio" value="Noche" id="turno" name="gender" />
-	  <label for="female" class="radio">No</label>
- </div>-->
  <div>
  <center>
  	<select id="turno">Turno

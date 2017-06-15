@@ -129,23 +129,63 @@ class Registros
 	}
 	public static function RegistrosFiltrados($condicion)
 	{
-		$datos= "<h1>".$condicion."</h1>
-				<table class='table table-hover'>
-				<th>
-					<tr class='danger'>
-					<td>HOLA</td>
-					<td>PRUEBo</td>
-				</th>
-				<tbody>
-					<tr>
-						<td>UNAS</td>
-						<td>COSAS</td>
-					</tr>
-				</tbody>
-				</thead>
-			</table>";
-		echo $datos;
+		switch ($condicion)
+		{
+			case 'Usuario':
+				$titulo = "Registros de Usuarios";
+				$datos = Registros::InformacionUsuarios();
+				break;
+			
+			default:
+				$datos = "NULL";
+				break;
+		}
+		$inicio= "<center><h3>".$titulo."</h3></center>
+				<table class='table table-hover'>";		
+		
+		$fin ="</table>";	
+
+		echo $inicio.$datos.$fin;
 	}
-	
+	public static function InformacionUsuarios()
+	{
+		$titulos = "<th>
+						<tr class='info'>
+							<td>Nombre</td>
+							<td>Apellido</td>
+							<td>Log In</td>
+							<td>Log Out</td>
+						</tr>
+					</th>";
+		$datos="";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$contenido = $pdo->query("SELECT usu.nombre, usu.apellido, regusu.login, regusu.logout FROM 
+								  registro_usuarios AS regusu, usuarios AS usu 
+								  WHERE usu.id = regusu.id_usuario");
+		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
+			{
+				$datos.="<tr>
+							<td>".$linea["nombre"]."</td>
+							<td>".$linea["apellido"]."</td>
+							<td>".$linea["login"]."</td>
+							<td>".$linea["logout"]."</td>
+						</tr>";
+			}
+		return $titulos.$datos;		
+	}
+	public static function OperacionesPorUsuario()
+	{
+		$titulos = "<th>
+						<tr class='success'>
+							<td>Nombre</td>
+							<td>Apellido</td>
+							<td>Operaciones</td>
+							<td>Monto</td>
+						</tr>
+					<th>";
+		$datos="";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento", "root","");
+		$contenido = $pdo->query("SELECT usu.nombre,usu.apellido,count(reg.id_usuario),sum(reg.monto) FROM usuarios AS usu, registros AS reg WHERE usu.id = reg.id_usuario");
+	}
 }
 ?>

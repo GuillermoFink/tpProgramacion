@@ -209,6 +209,13 @@ include_once 'clases/lugares.php';
   </div>
   
 </div>
+<!--MODAL DE ALTA DE USUARIO
+  <div class="container">
+    <div class="modal fade" id="modalAltaUsuario" role="dialog">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Alta Usuario</h4>
+    </div> -->
+  </div>
 </body>
 </html>
 
