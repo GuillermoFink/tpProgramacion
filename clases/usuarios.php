@@ -230,6 +230,64 @@ class Usuario
 		}
 		echo $inicio.$datos.$fin;
 	}
+	public static function FormatoString($string)
+	{
+		$validado = strtolower($string);
+		if (strpos($validado,' ')=== FALSE)
+		{
+			$validado = ucfirst($validado);
+		}
+		else
+		{
+			$nombreCompuesto = explode(" ",$validado);
+			$nombreCompuesto[0]=ucfirst($nombreCompuesto[0]);
+			$nombreCompuesto[1]=ucfirst($nombreCompuesto[1]);
+			$validado = $nombreCompuesto[0]." ".$nombreCompuesto[1];
+		}
+		return $validado;
+	}
+	public static function ValidarPatente($patente)
+	{
+		$validada = FALSE;
+		$digitos = strlen($patente);
+		if ($digitos == 7)
+		{
+			$letras = str_split($patente);
+			if (is_string($letras[0]) && is_string($letras[1]) && is_string($letras[2]))
+			{
+				if($letras[3] === ' ')
+				{
+					if(is_numeric($letras[4]) && is_numeric($letras[5]) && is_numeric($letras[6]))
+					{
+						$validada = strtoupper($patente);
+					}
+				}
+			}
+		}else
+		{
+			if($digitos == 9)
+			{
+				$letras = str_split($patente);
+				if(is_string($letras[0]) && is_string($letras[1]))
+				{
+					if($letras[2] === ' ')
+					{
+						if(is_numeric($letras[3]) && is_numeric($letras[4]) && is_numeric($letras[5]))
+						{
+							if($letras[6] == ' ')
+							{
+								if(is_string($letras[7]) && is_string($letras[8]))
+								{
+									$validada = strtoupper($patente);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $validada;
+	}
 	
 }
 ?>

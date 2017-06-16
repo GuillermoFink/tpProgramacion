@@ -171,6 +171,48 @@ class Vehiculo
 				$respuesta = $_SESSION["id"]."*".$patente."*".$lugar."*".$hora."*".$monto;
 			}				
 		return $respuesta;
+	}
+	public static function ValidarPatente($patente)
+	{
+		$validada = FALSE;
+		$digitos = strlen($patente);
+		if ($digitos == 7)
+		{
+			$letras = str_split($patente);
+			if (ctype_alpha($letras[0]) && ctype_alpha($letras[1]) && ctype_alpha($letras[2]))
+			{
+				if($letras[3] === ' ')
+				{
+					if(is_numeric($letras[4]) && is_numeric($letras[5]) && is_numeric($letras[6]))
+					{
+						$validada = strtoupper($patente);
+					}
+				}
+			}
+		}else
+		{
+			if($digitos == 9)
+			{
+				$letras = str_split($patente);
+				if(ctype_alpha($letras[0]) && ctype_alpha($letras[1]))
+				{
+					if($letras[2] === ' ')
+					{
+						if(is_numeric($letras[3]) && is_numeric($letras[4]) && is_numeric($letras[5]))
+						{
+							if($letras[6] == ' ')
+							{
+								if(ctype_alpha($letras[7]) && ctype_alpha($letras[8]))
+								{
+									$validada = strtoupper($patente);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $validada;
 	}	
 }
 ?>
