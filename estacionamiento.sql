@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2017 a las 23:15:42
+-- Tiempo de generación: 16-06-2017 a las 23:43:13
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.28
 
@@ -41,10 +41,12 @@ CREATE TABLE `autos` (
 --
 
 INSERT INTO `autos` (`id_lugar`, `patente`, `marca`, `color`, `hora`) VALUES
-(105, 'PPR 321', 'Audi', 'Blanco', 1495660316),
-(108, 'AA 332 PP', 'Chevrolet', 'Azul', 1495569308),
-(204, 'KKK 000', 'Ford', 'Rojo', 1495666018),
-(305, 'KKE 223', 'Dodge', 'Azul', 1495578361);
+(107, 'PEP 606', 'Daewoo', 'Verde', 1497560538),
+(108, 'KKP 232', 'Audi', 'Negro', 1497560512),
+(111, 'LOP 204', 'Ford', 'Rojo', 1497383782),
+(116, 'JHF 546', 'Chevrolet', 'Marron', 1497560573),
+(206, 'AA 321 BE', 'Ford', 'Blanco', 1497560625),
+(306, 'TE 505 OE', 'Chrysler', 'Azul', 1497560672);
 
 -- --------------------------------------------------------
 
@@ -65,21 +67,21 @@ CREATE TABLE `lugares` (
 
 INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 (1, 101, 0, 1),
-(1, 102, 1, 1),
+(1, 102, 0, 1),
 (1, 103, 0, 1),
 (1, 104, 0, 0),
-(1, 105, 1, 0),
+(1, 105, 0, 0),
 (1, 106, 0, 0),
-(1, 107, 0, 0),
+(1, 107, 1, 0),
 (1, 108, 1, 0),
 (1, 109, 0, 0),
 (1, 110, 0, 0),
-(1, 111, 0, 0),
+(1, 111, 1, 0),
 (1, 112, 0, 0),
 (1, 113, 0, 0),
 (1, 114, 0, 0),
 (1, 115, 0, 0),
-(1, 116, 0, 0),
+(1, 116, 1, 0),
 (1, 117, 0, 0),
 (1, 118, 0, 0),
 (1, 119, 0, 0),
@@ -97,9 +99,9 @@ INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 (2, 201, 0, 1),
 (2, 202, 0, 1),
 (2, 203, 0, 1),
-(2, 204, 1, 0),
+(2, 204, 0, 0),
 (2, 205, 0, 0),
-(2, 206, 0, 0),
+(2, 206, 1, 0),
 (2, 207, 0, 0),
 (2, 208, 0, 0),
 (2, 209, 0, 0),
@@ -128,8 +130,8 @@ INSERT INTO `lugares` (`id_piso`, `id_lugar`, `ocupado`, `discapacitado`) VALUES
 (3, 302, 0, 1),
 (3, 303, 0, 1),
 (3, 304, 0, 0),
-(3, 305, 1, 0),
-(3, 306, 0, 0),
+(3, 305, 0, 0),
+(3, 306, 1, 0),
 (3, 307, 0, 0),
 (3, 308, 0, 0),
 (3, 309, 0, 0),
@@ -177,7 +179,19 @@ CREATE TABLE `registros` (
 INSERT INTO `registros` (`id_lugar`, `id_usuario`, `patente`, `hora_inicio`, `hora_fin`, `monto`) VALUES
 (109, 3, 'KKK 222', 1495569602, 1495660326, 252),
 (110, 3, 'ppp222', 1495569484, 1495665393, 266.4),
-(112, 2, 'AAA 123', 1495664854, 1495666190, 3.7);
+(112, 2, 'AAA 123', 1495664854, 1495666190, 3.7),
+(305, 3, 'KKE 223', 1495578361, 1497380069, 5004.7),
+(307, 3, 'AAB 221', 1497380094, 1497380351, 0.7),
+(204, 3, 'KKK 000', 1495666018, 1497381688, 4765.7),
+(108, 3, 'AA 332 PP', 1495569308, 1497381761, 5034.6),
+(101, 3, 'KKK 222', 1497381844, 1497381855, 0),
+(105, 3, 'PPR 321', 1495660316, 1497383523, 4786.6),
+(107, 3, 'KEP 982', 1497383744, 1497383897, 0.3),
+(108, 3, 'KKN 232', 1497383464, 1497383989, 1.4),
+(307, 5, 'AAE 210', 1497380380, 1497392505, 33.6),
+(109, 5, 'TRT 220', 1497383825, 1497560833, 491.2),
+(110, 4, 'EPE 222', 1497392537, 1497560853, 467.5),
+(104, 2, 'oki 202', 1497392487, 1497560886, 467.8);
 
 -- --------------------------------------------------------
 
@@ -216,7 +230,17 @@ INSERT INTO `registro_usuarios` (`id_usuario`, `login`, `logout`) VALUES
 (3, '8-6-2017  23:25', '8-6-2017  23:26'),
 (3, '8-6-2017  23:27', '8-6-2017  23:27'),
 (2, '8-6-2017  23:27', '8-6-2017  23:37'),
-(3, '8-6-2017  23:37', '8-6-2017  23:39');
+(3, '8-6-2017  23:37', '8-6-2017  23:39'),
+(3, '13-6-2017  20:53', '13-6-2017  20:56'),
+(3, '13-6-2017  20:59', '13-6-2017  21:16'),
+(3, '13-6-2017  21:17', '13-6-2017  21:19'),
+(3, '13-6-2017  21:19', '13-6-2017  21:21'),
+(3, '13-6-2017  22:51', '13-6-2017  22:52'),
+(3, '13-6-2017  22:55', '14-6-2017  0:12'),
+(3, '15-6-2017  22:15', '15-6-2017  23:1'),
+(4, '15-6-2017  23:1', '15-6-2017  23:3'),
+(5, '15-6-2017  23:3', '15-6-2017  23:7'),
+(4, '15-6-2017  23:7', '15-6-2017  23:7');
 
 -- --------------------------------------------------------
 
@@ -230,16 +254,19 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `tipo` varchar(20) NOT NULL,
-  `turno` varchar(20) NOT NULL
+  `turno` varchar(20) NOT NULL,
+  `habilitado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `password`, `nombre`, `apellido`, `tipo`, `turno`) VALUES
-(2, 'xxx', 'pedro', 'gutierrez', 'user', 'noche'),
-(3, 'asd', 'gui', 'fink', 'admin', 'admin');
+INSERT INTO `usuarios` (`id`, `password`, `nombre`, `apellido`, `tipo`, `turno`, `habilitado`) VALUES
+(2, 'xxx', 'pedro', 'gutierrez', 'user', 'noche', 1),
+(3, 'asd', 'gui', 'fink', 'admin', 'admin', 1),
+(4, 'asd', 'juan', 'perez', 'user', 'noche', 1),
+(5, 'asd', 'martin', 'lopez', 'admin', 'tarde', 1);
 
 --
 -- Índices para tablas volcadas
@@ -265,7 +292,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
