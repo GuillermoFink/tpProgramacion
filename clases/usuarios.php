@@ -11,9 +11,10 @@ class Usuario
 	private $_apellido;
 	private $_tipo;
 	private $_turno;
+	private $_habilitado;
 
 	#CONSTRUCTOR---------------------------------------------------------------------------------
-	function __construct($nombre,$password,$apellido,$tipo,$turno,$id=null)
+	function __construct($nombre,$password,$apellido,$tipo,$turno,$id=null,$habilitado=1)
 	{
 		$this->_id = $id;
 		$this->_nombre = $nombre;
@@ -21,6 +22,7 @@ class Usuario
 		$this->_apellido = $apellido;
 		$this->_tipo = $tipo;
 		$this->_turno = $turno;
+		$this->_habilitado = $habilitado;
 	}
 
 	#GETTERS Y SETTERS----------------------------------------------------------------------------
@@ -69,22 +71,34 @@ class Usuario
 	{
 		$this->_turno = $turno;
 	}
+	public function GetHabilitado()
+	{
+		return $this->_habilitado;
+	}
+	public function SetHabilitado($habilito)
+	{
+		$this->_habilitado = $habilito;
+	}
 	#---------------------------------------------------------------------------------------------
 
 	#ALTA DE USUARIO------------------------------------------------------------------------------
 	public static function AltaUsuario($obj)
 	{
+		$nombre = Usuario::FormatoString($obj->GetNombre());
+		$apellido = Usuario::FormatoString($obj->GetApellido());
+		
 		$resultado = FALSE;
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$db = $pdo->prepare("INSERT INTO usuarios (nombre,password,apellido,tipo,turno)VALUES(:nombre,:password,:apellido,:tipo,:turno)");
-		$db->bindValue(':nombre',$obj->GetNombre());
+		$db = $pdo->prepare("INSERT INTO usuarios (nombre,password,apellido,tipo,turno,habilitado)VALUES(:nombre,:password,:apellido,:tipo,:turno,:habilitado)");
+		$db->bindValue(':nombre',$nombre);
 		$db->bindValue(':password',$obj->GetPassword());
-		$db->bindValue(':apellido',$obj->GetApellido());
+		$db->bindValue(':apellido',$apellido);
 		$db->bindValue(':tipo',$obj->GetTipo());
 		$db->bindValue(':turno',$obj->GetTurno());
+		$db->bindValue(':habilitado',$obj->GetHabilitado());
 		if($db->execute())
 		{
-			$resultado = TRUE;
+			$resultado = Usuario::TablaUsuarios();
 		}
 		return $resultado;	
 	}
@@ -97,7 +111,7 @@ class Usuario
 		$db->bindValue(':id',$id);
 		if ($db->execute())
 		{
-			$resultado = TRUE;
+			$resultado = Usuario::TablaUsuarios();
 		}
 		return $resultado;
 	}
@@ -106,18 +120,46 @@ class Usuario
 	{
 		$resultado = FALSE;
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$db = $pdo->prepare("UPDATE usuarios SET nombre=:nombre, apellido=:apellido, tipo=:tipo, turno=:turno WHERE id=:id");
+		$db = $pdo->prepare("UPDATE usuarios SET nombre=:nombre, apellido=:apellido, tipo=:tipo, turno=:turno,password=:password WHERE id=:id");
 		$db->bindValue(':nombre',$obj->GetNombre());
 		$db->bindValue(':apellido',$obj->GetApellido());
 		$db->bindValue(':tipo',$obj->GetTipo());
 		$db->bindValue(':turno',$obj->GetTurno());
 		$db->bindValue(':id',$obj->GetId());
+		$db->bindValue(':password',$obj->GetPassword());
 		if($db->execute())
 		{
-			$resultado = TRUE;
+			$resultado = Usuario::TablaUsuarios();
 		}
 		return $resultado;
 	}
+	#SUSPENCION DE USUARIO-----------------------------------------------------------------------
+	public static function SuspenderUsuario($id)
+	{
+		$resultado = FALSE;
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("UPDATE usuarios SET habilitado=:habilitado WHERE id=:id");
+		$db->bindValue(':id',$id);
+		$db->bindValue(':habilitado',0);
+		if($db->execute())
+		{
+			$resultado = Usuario::TablaUsuarios();
+		}
+		return $resultado;
+	}
+	public static function HabilitarUsuario($id)
+	{
+		$resultado = FALSE;
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("UPDATE usuarios SET habilitado=:habilitado WHERE id=:id");
+		$db->bindValue(':id',$id);
+		$db->bindValue(':habilitado',1);
+		if($db->execute())
+		{
+			$resultado = Usuario::TablaUsuarios();
+		}
+		return $resultado;
+	}	
 	#TRAER ARRAY USUARIOS---------------------------------------------------------------------------
 	public static function TraerUsuarios()
 	{
@@ -126,12 +168,32 @@ class Usuario
 		$contenido = $pdo->query("SELECT * FROM usuarios");
 		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
 			{
-				$unUsuario = new Usuario($linea["nombre"],$linea["password"],$linea["apellido"],$linea["tipo"],$linea["turno"],$linea["id"]);
+				$unUsuario = new Usuario($linea["nombre"],$linea["password"],$linea["apellido"],$linea["tipo"],$linea["turno"],$linea["id"],$linea["habilitado"]);
 				array_push($ListaDeUsuarios, $unUsuario);
 			}				
 		return $ListaDeUsuarios;
 	}
+	public static function TraerUnUsuario($id)
+	{
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare("SELECT * FROM usuarios WHERE id=:id");
+		$db->bindValue(':id',$id);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			$miUsuario = new Usuario($linea["nombre"],$linea["password"],$linea["apellido"],$linea["tipo"],$linea["turno"],$linea["id"],$linea["habilitado"]);
+		}
+		$respuesta=$miUsuario->GetId()."*";
+		$respuesta.=$miUsuario->GetPassword()."*";
+		$respuesta.=$miUsuario->GetNombre()."*";
+		$respuesta.=$miUsuario->GetApellido()."*";
+		$respuesta.=$miUsuario->GetTipo()."*";
+		$respuesta.=$miUsuario->GetTurno()."*";
+		$respuesta.=$miUsuario->GetHabilitado();
 
+		return $respuesta;
+
+	}
 	public static function LoginUsuario($usuario,$password)
 	{
 		$rta = false;
@@ -219,9 +281,16 @@ class Usuario
 						{
 							$datos.="<td>
 										<button class='btn btn-danger btn-xs' onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
-										<button class='btn btn-success btn-xs' >Modificar</button>
-										<button class='btn btn-warning btn-xs' >Suspender</button>
-									</td>";
+										<button class='btn btn-info btn-xs' onclick='ModificarUser(\"".$users->GetId()."\")'>Modificar</button>
+										";
+							if($users->GetHabilitado()==1)
+								{
+									$datos.="<button class='btn btn-warning btn-xs' onclick='SuspenderUsuario(\"".$users->GetId()."\")'>Suspender</button>";	
+								}else
+								{
+									$datos.="<button class='btn btn-success btn-xs' onclick='HabilitarUsuario(\"".$users->GetId()."\")'>Habilitar</button>";	
+								}
+							$datos.="</td>";
 						}
 						else
 							{
@@ -246,48 +315,5 @@ class Usuario
 		}
 		return $validado;
 	}
-	public static function ValidarPatente($patente)
-	{
-		$validada = FALSE;
-		$digitos = strlen($patente);
-		if ($digitos == 7)
-		{
-			$letras = str_split($patente);
-			if (is_string($letras[0]) && is_string($letras[1]) && is_string($letras[2]))
-			{
-				if($letras[3] === ' ')
-				{
-					if(is_numeric($letras[4]) && is_numeric($letras[5]) && is_numeric($letras[6]))
-					{
-						$validada = strtoupper($patente);
-					}
-				}
-			}
-		}else
-		{
-			if($digitos == 9)
-			{
-				$letras = str_split($patente);
-				if(is_string($letras[0]) && is_string($letras[1]))
-				{
-					if($letras[2] === ' ')
-					{
-						if(is_numeric($letras[3]) && is_numeric($letras[4]) && is_numeric($letras[5]))
-						{
-							if($letras[6] == ' ')
-							{
-								if(is_string($letras[7]) && is_string($letras[8]))
-								{
-									$validada = strtoupper($patente);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return $validada;
-	}
-	
 }
 ?>

@@ -29,7 +29,6 @@ session_start();
 
              <div class="form-group">
                  <input type="submit" class="btn btn-block btn-lg btn-primary" onclick='Login()' value="Login"/>
-                 <input type="submit" class="btn btn-block btn-lg btn-primary" onclick='AltaUsuario()' value="Nuevo Usuario"/>
              </div>
          </div>
 

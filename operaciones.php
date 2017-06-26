@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once 'clases/validarsesion.php';
 include_once 'clases/usuarios.php';
 include_once 'clases/vehiculo.php';
 include_once 'clases/registros.php';
@@ -75,7 +76,7 @@ include_once 'clases/lugares.php';
     </div>
     <div id="menu1" class="tab-pane fade">
       <h3>Usuarios</h3>
-      <button class="btn btn-success" onclick="AltaUsuario()">Nuevo Usuario</button>
+      <button class="btn btn-success" onclick="ModalAltaUsuario()">Nuevo Usuario</button>
       	<div id='tablausuarios'>
       		<?php
 				Usuario::TablaUsuarios();
@@ -208,13 +209,90 @@ include_once 'clases/lugares.php';
     </div>
   </div>
   
+  <!--MODAL DE MODIFICAR USUARIO-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="modalModiUser" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modificar Usuario</h4>
+        </div>
+        <div class="modal-body" id="ModiUser">
+          <input type="hidden" name="id" id="id_mod" disabled>
+          <input type="hidden" name="id" id="habilitado_mod" disabled>
+          Nombre:<br>
+          <input type="text" name="nombre" id="nombre_mod" required><br>
+          Apellido:<br>
+          <input type="text" name="apellido" id="ape_mod" required><br>
+          Password:<br>
+          <input type="password" name="apellido" id="password_mod" required><br>
+          Tipo:<br>
+          <select id="tipo_mod">
+          <option>admin</option>
+          <option>user</option>
+          </select><br>
+          Turno:<br>
+          <select id="turno_mod">
+            <option>manana</option>
+            <option>tarde</option>
+            <option>noche</option>
+          </select><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="ConfirmarModificacion()">Confirmar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ 
+   <!--MODAL DE ALTA USUARIO-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="modalAltaUsuario" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modificar Usuario</h4>
+        </div>
+        <div class="modal-body" id="ModiUser">
+          Nombre:<br>
+          <input type="text" name="nombre" id="alta_nombre" required><br>
+          Apellido:<br>
+          <input type="text" name="apellido" id="alta_apellido" required><br>
+          Password:<br>
+          <input type="password" name="apellido" id="alta_password" required><br>
+          Tipo:<br>
+          <select id="alta_tipo">
+          <option>admin</option>
+          <option selected>user</option>
+          </select><br>
+          Turno:<br>
+          <select id="alta_turno">
+            <option>manana</option>
+            <option selected>tarde</option>
+            <option>noche</option>
+          </select><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="NuevoUsuario()">Confirmar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
 </div>
-<!--MODAL DE ALTA DE USUARIO
-  <div class="container">
-    <div class="modal fade" id="modalAltaUsuario" role="dialog">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Alta Usuario</h4>
-    </div> -->
+</div>
+
   </div>
 </body>
 </html>

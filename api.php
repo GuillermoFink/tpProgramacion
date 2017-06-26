@@ -34,6 +34,38 @@ $app->get('/traerFiltros',function($request,$response)
 
 		return $response;
 	});
+//PUTS****************************************************************************************************************************
+$app->put('/Deshabilitar',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$response->write(Usuario::SuspenderUsuario($datos["idUser"]));
+
+		return $response;
+	});
+
+$app->put('/Habilitar',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$response->write(Usuario::HabilitarUsuario($datos["idUser"]));
+
+		return $response;
+	});
+$app->put('/ModificarUsuario',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$response->write(Usuario::TraerUnUsuario($datos["idModi"]));
+
+		return $response;
+	});
+$app->put('/ConfirmaMod',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$usuario = new Usuario(
+			$datos["nombre"],$datos["password"],$datos["apellido"],$datos["tipo"],$datos["turno"],$datos["id"],$datos["habilitado"]);
+		$response->write(Usuario::ModiUsuario($usuario));
+
+		return $response;
+	});
 //POSTS****************************************************************************************************************************
 $app->post('/traerLugaresLibres',function($request,$response)
 	{
@@ -79,7 +111,12 @@ $app->post('/datosFiltrados',function($request,$response)
 
 		return $response;
 	});
-
+$app->post('/nuevoUser',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$usuario = new Usuario($datos["nombre"],$datos["password"],$datos["apellido"],$datos["tipo"],$datos["turno"]);
+		$response->write(Usuario::AltaUsuario($usuario));
+	});
 //DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)
 	{
