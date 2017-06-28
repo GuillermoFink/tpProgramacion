@@ -117,8 +117,9 @@ class Registros
 		$datos= "<div>
 					<select id='selectFiltro' onchange='TablaFiltrada()'>
 						<option>Usuario</option>
-						<option selected='selected'>Cochera</option>
+						<option selected='selected'>Lugares</option>
 						<option>Cochera menos usada</option>
+						<option>Operaciones</option>
 					</select>
 				</div>
 				<div id='resultadoFiltro'>
@@ -135,7 +136,14 @@ class Registros
 				$titulo = "Registros de Usuarios";
 				$datos = Registros::InformacionUsuarios();
 				break;
-			
+			case 'Operaciones':
+				$titulo = "Registros de Operaciones";
+				$datos = Registros::OperacionesMontosPorUsuario();
+				break;
+			case 'Lugares':
+				$titulo = "Registros de Lugares";
+				$datos = Registros::LugaresMasUsados().Registros::LugaresQueMasFacturaron();
+				break;
 			default:
 				$datos = "NULL";
 				break;
@@ -186,6 +194,92 @@ class Registros
 		$datos="";
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento", "root","");
 		$contenido = $pdo->query("SELECT usu.nombre,usu.apellido,count(reg.id_usuario),sum(reg.monto) FROM usuarios AS usu, registros AS reg WHERE usu.id = reg.id_usuario");
+	}
+	public static function OperacionesMontosPorUsuario()
+	{
+		$titulos = "	<tr class='success'>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Cant. Operaciones</th>
+						<th>Monto Facturado</th>
+					</tr>";
+		$datos="";
+
+		$consulta= "SELECT U.nombre,U.apellido, COUNT(*) as operaciones,SUM(monto) AS facturado FROM usuarios as U, registros WHERE id_usuario = U.id GROUP BY U.nombre";
+
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$contenido = $pdo->query($consulta);
+		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos.="	<tr>
+							<td>".$linea["nombre"]."</td>
+							<td>".$linea["apellido"]."</td>
+							<td>".$linea["operaciones"]."</td>
+							<td>".$linea["facturado"]."</td>
+						</tr>";
+		}
+		return $titulos.$datos;
+	}
+	public static function LugaresMasUsados()
+	{
+		$datos="";
+		$inicio = "	<div class='col-xs-6'>
+						<h2 class='sub-header'>TOP 10 + usados</h2>
+							<div class='table-responsive'>
+								<table class='table table-striped'>
+									<thead>
+										<tr class='info'>
+											<th>Lugar</th>
+											<th>Usos</th>
+											<th>Facturado</th>
+										</tr>
+									</thead>";
+		$fin = "		</table>
+					</div>
+				</div>";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$consulta="SELECT id_lugar,COUNT(*) as cantidad,SUM(monto) AS facturado FROM registros GROUP BY id_lugar ORDER BY cantidad DESC LIMIT 10";
+		$contenido = $pdo->query($consulta);
+		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos.="	<tr>
+							<td>".$linea["id_lugar"]."</td>
+							<td>".$linea["cantidad"]."</td>
+							<td>".$linea["facturado"]."</td>
+						</tr>";
+		}
+		return $inicio.$datos.$fin;
+	}
+	public static function LugaresQueMasFacturaron()
+	{
+		$datos="";
+		$inicio = "	<div class='col-xs-6'>
+						<h2 class='sub-header'>TOP 10 facturado</h2>
+							<div class='table-responsive'>
+								<table class='table table-striped'>
+									<thead>
+										<tr class='info'>
+											<th>Lugar</th>
+											<th>Usos</th>
+											<th>Facturado</th>
+										</tr>
+									</thead>";
+		$fin = "				/table>
+							/div>
+					<div id='push'></div>
+				</div>";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$consulta="SELECT id_lugar,COUNT(*) as cantidad,SUM(monto) AS facturado FROM registros GROUP BY id_lugar ORDER BY facturado DESC LIMIT 10";
+		$contenido = $pdo->query($consulta);
+		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos.="	<tr>
+							<td>".$linea["id_lugar"]."</td>
+							<td>".$linea["cantidad"]."</td>
+							<td>".$linea["facturado"]."</td>
+						</tr>";
+		}
+		return $inicio.$datos.$fin;
 	}
 }
 ?>

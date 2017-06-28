@@ -173,6 +173,7 @@ class Usuario
 			}				
 		return $ListaDeUsuarios;
 	}
+	#TRAER SOLO UN USUARIO---------------------------------------------------------------------------
 	public static function TraerUnUsuario($id)
 	{
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
