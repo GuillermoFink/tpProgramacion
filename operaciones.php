@@ -65,7 +65,7 @@ include_once 'clases/lugares.php';
       <button class="btn btn-info" onclick="TablaEstacionados()">Inicio</button>
       <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
       <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
-      <button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>
+      <!--<button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>-->
       <button class="btn" onclick="TablaFiltros()">Filtros</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
       <br><center><h2 id="titulo">Autos Estacionados</h2></center>
@@ -76,7 +76,14 @@ include_once 'clases/lugares.php';
     </div>
     <div id="menu1" class="tab-pane fade">
       <h3>Usuarios</h3>
-      <button class="btn btn-success" onclick="ModalAltaUsuario()">Nuevo Usuario</button>
+      <?php
+      if ($_SESSION["tipo"]=="admin")
+      {
+        echo '<button class="btn btn-info" onclick="TablaUsuarios()">Lista de Usuarios</button>
+              <button class="btn btn-warning" onclick="TablaRegistros()">Registros</button>
+              <button class="btn btn-success" onclick="ModalAltaUsuario()">Nuevo Usuario</button>';
+      }
+      ?>
       	<div id='tablausuarios'>
       		<?php
 				Usuario::TablaUsuarios();

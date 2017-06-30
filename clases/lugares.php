@@ -103,10 +103,10 @@ class Lugares
 			}				
 			if ($linea["ocupado"] != true )
 			{
-				$datos.='<td class="bg-success">'.$linea["id_lugar"].'</td>';
+				$datos.='<td class="col-md-1 bg-success">'.$linea["id_lugar"].'</td>';
 			}else
 			{
-				$datos.='<td class="bg-danger">'.$linea["id_lugar"].'</td>';
+				$datos.='<td class="col-md-1 bg-danger">'.$linea["id_lugar"].'</td>';
 			}
 			$cont++;
 			if($cont == 10)

@@ -34,6 +34,12 @@ $app->get('/traerFiltros',function($request,$response)
 
 		return $response;
 	});
+$app->get('/TopUsuarios',function($request,$response)
+	{
+		$response->getBody()->write(Registros::TopRegistrosPorUsuario());
+
+		return $response;
+	});
 //PUTS****************************************************************************************************************************
 $app->put('/Deshabilitar',function($request,$response)
 	{
@@ -116,6 +122,15 @@ $app->post('/nuevoUser',function($request,$response)
 		$datos = $request->getParsedBody();
 		$usuario = new Usuario($datos["nombre"],$datos["password"],$datos["apellido"],$datos["tipo"],$datos["turno"]);
 		$response->write(Usuario::AltaUsuario($usuario));
+
+		return $response;
+	});
+$app->post('/HistorialUsuario',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$response->write(Usuario::HitsorialUsuario($datos["id"]));
+
+		return $response;
 	});
 //DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)
@@ -125,8 +140,9 @@ $app->delete('/RetirarAuto',function($request,$response)
 		Registros::IngresarRegistro($unRegistro);
 		Lugares::LiberarLugar($datos["idlugar"]);
 		Vehiculo::RetirarAuto($datos["pat"]);
-		$respuesta = Vehiculo::TablaEstacionados();
-		$response->write($respuesta);
+		//$respuesta = Vehiculo::TablaEstacionados();
+		$response->write(Vehiculo::TablaEstacionados());
+		
 		return $response;
 	});
 $app->delete('/EliminarUsuario',function($request,$response)

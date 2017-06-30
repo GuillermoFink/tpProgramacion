@@ -12,6 +12,8 @@ class Usuario
 	private $_tipo;
 	private $_turno;
 	private $_habilitado;
+	//private $_fondo;
+	//private $_foto;
 
 	#CONSTRUCTOR---------------------------------------------------------------------------------
 	function __construct($nombre,$password,$apellido,$tipo,$turno,$id=null,$habilitado=1)
@@ -23,6 +25,8 @@ class Usuario
 		$this->_tipo = $tipo;
 		$this->_turno = $turno;
 		$this->_habilitado = $habilitado;
+		//$this->_fondo = $fondo;
+		//$this->_foto = $foto;
 	}
 
 	#GETTERS Y SETTERS----------------------------------------------------------------------------
@@ -71,6 +75,7 @@ class Usuario
 	{
 		$this->_turno = $turno;
 	}
+	#---------------------------------------------------------------------------------------------
 	public function GetHabilitado()
 	{
 		return $this->_habilitado;
@@ -79,6 +84,24 @@ class Usuario
 	{
 		$this->_habilitado = $habilito;
 	}
+	#---------------------------------------------------------------------------------------------
+	/*public function GetFondo()
+	{
+		return $this->_fondo;
+	}
+	public function SetFondo($fondo)
+	{
+		$this->_fondo = $fondo;
+	}
+	#---------------------------------------------------------------------------------------------
+	public function GetFoto()
+	{
+		return $this->_foto;
+	}
+	public function SetFoto($foto)
+	{
+		$this->_foto = $foto;
+	}*/
 	#---------------------------------------------------------------------------------------------
 
 	#ALTA DE USUARIO------------------------------------------------------------------------------
@@ -199,7 +222,7 @@ class Usuario
 	{
 		$rta = false;
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$db = $pdo->prepare("SELECT * FROM usuarios WHERE nombre=:nombre AND password=:password");
+		$db = $pdo->prepare("SELECT * FROM usuarios WHERE nombre=:nombre AND password=:password AND habilitado != 0");
 		$db->bindValue(':nombre',$usuario);
 		$db->bindValue(':password',$password);
 		$db->execute();
@@ -283,6 +306,7 @@ class Usuario
 							$datos.="<td>
 										<button class='btn btn-danger btn-xs' onclick='EliminarUsuario(\"".$users->GetId()."\")'>Eliminar</button>
 										<button class='btn btn-info btn-xs' onclick='ModificarUser(\"".$users->GetId()."\")'>Modificar</button>
+										<button class='btn btn-xs' onclick='HistorialUser(\"".$users->GetId()."\")'>Historial</button>
 										";
 							if($users->GetHabilitado()==1)
 								{
@@ -315,6 +339,10 @@ class Usuario
 			$validado = $nombreCompuesto[0]." ".$nombreCompuesto[1];
 		}
 		return $validado;
+	}
+	public static function HitsorialUsuario($id)
+	{
+		
 	}
 }
 ?>

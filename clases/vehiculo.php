@@ -65,16 +65,24 @@ class Vehiculo
 	public static function IngresarAuto($obj)
 	{
 		$resultado = FALSE;
-		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$db = $pdo->prepare("INSERT INTO autos (id_lugar,patente,marca,color,hora)VALUES(:idLugar,:patente,:marca,:color,:hora)");
-		$db->bindValue(':patente',$obj->GetPatente());
-		$db->bindValue(':marca',$obj->GetMarca());
-		$db->bindValue(':color',$obj->GetColor());
-		$db->bindValue(':hora',$obj->GetHora());
-		$db->bindValue(':idLugar',$obj->GetId());
-		if($db->execute() && Lugares::OcuparLugar($obj->GetId()))
+		$patente = Vehiculo::ValidarPatente($obj->GetPatente());
+		if( $patente != FALSE)
 		{
-			$resultado = Vehiculo::TablaEstacionados();
+			$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+			$db = $pdo->prepare("INSERT INTO autos (id_lugar,patente,marca,color,hora)VALUES(:idLugar,:patente,:marca,:color,:hora)");
+			$db->bindValue(':patente',$patente);
+			$db->bindValue(':marca',$obj->GetMarca());
+			$db->bindValue(':color',$obj->GetColor());
+			$db->bindValue(':hora',$obj->GetHora());
+			$db->bindValue(':idLugar',$obj->GetId());
+			if($db->execute() && Lugares::OcuparLugar($obj->GetId()))
+				{
+					$resultado = Vehiculo::TablaEstacionados();
+				}
+		}
+		else
+		{
+			$resultado = "errorpat";
 		}
 		return $resultado;		
 	}
@@ -151,8 +159,28 @@ class Vehiculo
 		$actual = time();
 		$tiempo = $actual - $tiempo;
 		$horas = round(($tiempo/60)/60,2);
-		$monto = $horas*10;
-		return $monto;
+		switch ($horas) {
+			case ($horas <= 9):
+				$valor = $horas*10;
+				break;
+			case ($horas > 9 && $horas < 12):
+				$valor = 90;
+				break;
+			case ($horas >12 && $horas <16):
+				$diferencia = $horas -12;
+				$valor = 90 + ($diferencia * 10);
+				break;
+			case ($horas > 16 && $horas <= 24):
+				$valor = 170;
+				break;
+			case ($horas > 24):
+				$diferencia = $horas -24;
+				$valor = 170 + ($diferencia * 10);
+				break;
+			default:
+				break;
+		}
+		return $valor;
 	}
 	public static function TraerAutoPorPatente($patente)
 	{

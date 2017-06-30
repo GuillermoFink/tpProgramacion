@@ -199,6 +199,27 @@ function ConfirmarModificacion()
 		}
 	});
 }
+function ModificarUser(id_usuario)
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'http://localhost/git/HistorialUsuario',
+		data:
+			{
+				id: id_usuario
+			}
+	});
+	a.done(function(respuesta){
+		if(respuesta != "error")
+		{
+			$("#~tablausuarios").html(respuesta);
+		}
+		else
+		{
+			alert("Error al cargar informacion del usuario");
+		}
+	});
+}
 function CerrarSesion(id_usuario,login)
 {
 	var a=$.ajax({
@@ -258,16 +279,20 @@ function AutoParaIngresar()
 	a.done(function(respuesta)
 	{
 		//alert(respuesta)
-		if (respuesta != false)
+		if(respuesta == "errorpat")
+		{
+			alert("Patente invalida");
+		}
+		if (respuesta != false && respuesta != "errorpat")
 		{
 			alert("Auto ingresado correctamente");
 			$("#tablaEstacionados").html(respuesta);
-			$("#myModal").modal("hide");
-		}else
+		}
+		if(respuesta == false)
 		{
 			alert("Error al ingresar");
-			$("#myModal").modal("hide");
 		}
+		$("#myModal").modal("hide");
 	});
 }
 function RetirarAuto()
@@ -355,8 +380,19 @@ function TablaRegistros()
 	});
 	a.done(function(respuesta){
 		
-		$("#tablaEstacionados").html(respuesta);
+		$("#tablausuarios").html(respuesta);
 		$("#titulo").html("Registros");
+	});
+}
+function TopUsuarios()
+{
+	var a=$.ajax({
+		type:'get',
+		url: 'http://localhost/git/TopUsuarios'
+	});
+	a.done(function(respuesta){
+		$("#tablausuarios").html(respuesta);
+		$("#titulo").html("TOP'S USUARIOS");
 	});
 }
 function TablaFiltros()
@@ -407,7 +443,7 @@ function TablaUsuarios()
 	});
 	a.done(function(respuesta)
 	{
-		$("#tablaEstacionados").html(respuesta);
+		$("#tablausuarios").html(respuesta);
 		$("#titulo").html("Usuarios");
 	});
 }

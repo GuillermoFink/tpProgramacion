@@ -28,7 +28,7 @@ if(isset($_POST["pat"]) && isset($_POST["marca"]) && isset($_POST["color"]) && i
 }
 if(isset($_POST["user"]) && isset($_POST["pw"]))
 {
-	$rta="Usuario o Password incorrecto";
+	$rta="Usuario o Password incorrecto\nO usuario deshabilitado";
 	if(Usuario::LoginUsuario($_POST["user"],$_POST["pw"]))
 	{
 		$rta="Ok";
