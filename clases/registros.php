@@ -71,7 +71,7 @@ class Registros
 	{
 		$ListaDeRegistros = array();
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
-		$contenido = $pdo->query("SELECT * FROM registros");
+		$contenido = $pdo->query("SELECT * FROM registros LIMIT 15");
 		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
 			{
 				$unRegistro = new Registros($linea["id_lugar"],$linea["id_usuario"],$linea["patente"],$linea["hora_inicio"],$linea["hora_fin"],$linea["monto"]);
@@ -82,7 +82,8 @@ class Registros
 	#TABLA REGISTROS------------------------------------------------------------------------------------------------------------------------------
 	public static function TraerTablaRegistros()
 	{
-		$inicio = "<table class='table table-hover'>
+		$inicio = "<center><h2>Ultimos 15 registros</h2></center>
+					<table class='table table-hover'>
 						<thead>
 							<tr class='info'>
 								<th>Lugar</th>
@@ -112,6 +113,7 @@ class Registros
 		}
 		echo $inicio.$datos.$fin;
 	}
+	# COMBO DE OPCIONES PARA OBTENER DATOS DE USUARIO O COCHERA ==================================================================================
 	public static function TablaFiltros()
 	{
 		$datos= "<div>
@@ -126,6 +128,7 @@ class Registros
 
 		return $datos;
 	}
+	# FUNCION QUE RESPONSE AL COMBO DE OPCIONES SELECCIONADAS PARA DIBUJAR LAS TABLAS ============================================================
 	public static function RegistrosFiltrados($condicion)
 	{
 		switch ($condicion)
@@ -156,6 +159,7 @@ class Registros
 
 		echo $inicio.$datos.$fin;
 	}
+	# DATOS DE LOGUEO DE USUARIOS =================================================================================================================
 	public static function InformacionUsuarios()
 	{
 		$titulos = "<table class='table table-hover'>
@@ -183,6 +187,7 @@ class Registros
 			}
 		return $titulos.$datos;		
 	}
+	# CANTIDAD DE OPERACIONES POR USUARIO ============================================================================================================
 	public static function OperacionesPorUsuario()
 	{
 		$titulos = "<thead>
@@ -197,6 +202,7 @@ class Registros
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento", "root","");
 		$contenido = $pdo->query("SELECT usu.nombre,usu.apellido,count(reg.id_usuario),sum(reg.monto) FROM usuarios AS usu, registros AS reg WHERE usu.id = reg.id_usuario");
 	}
+	# CANTIDAD DE LOGUINS POR USUARIO ==================================================================================================================
 	public static function LogueoDeUsuarios()
 	{
 		$consulta = "SELECT u.nombre, count(*) AS logueos FROM usuarios AS u, registro_usuarios WHERE id_usuario = u.id GROUP BY u.nombre ORDER BY logueos DESC";
@@ -227,6 +233,7 @@ class Registros
 
 		return $titulos.$datos.$fin;
 	}
+	# TABLA DE OPERACIONES Y MONTOS POR USUARIO ORDENADA POR MONTO FACTURADO ==============================================================================
 	public static function OperacionesMontosPorUsuario()
 	{
 		$titulos = "<div class='col-xs-6'>
@@ -261,7 +268,7 @@ class Registros
 		}
 		return $titulos.$datos.$fin;
 	}
-
+	# TABLA DE TOP 5 DE LUGARES MAS UTILIZADOS =============================================================================================================
 	public static function LugaresMasUsados()
 	{
 		$datos="";
@@ -292,6 +299,7 @@ class Registros
 		}
 		return $inicio.$datos.$fin;
 	}
+	# TABLA DE TOP 5 DE LUGARES QUE MAS FACTURARON =============================================================================================================
 	public static function LugaresQueMasFacturaron()
 	{
 		$datos="";
@@ -322,6 +330,7 @@ class Registros
 		}
 		return $inicio.$datos.$fin;
 	}
+	# TABLA DE TOP 5 DE LUGARES MENOS UTILIZADOS =============================================================================================================
 	public static function LugaresMenosUsados()
 	{
 		$datos="";

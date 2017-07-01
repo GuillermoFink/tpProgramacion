@@ -44,7 +44,7 @@ include_once 'clases/lugares.php';
 <body class="fondotabla">
 <div class="bgimg"><h2>Bienvenido <?php echo $_SESSION["nombre"];?>!</h2>
   <div align="left">
-    <button class="btn btn-success">Preferencias</button>
+    <button class="btn btn-success" onclick='ModificarUser(<?php echo $_SESSION["id"]?>)'>Preferencias</button>
     <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
   </div>
 </div>
@@ -170,7 +170,7 @@ include_once 'clases/lugares.php';
         </div>
         <div class="modal-body" id="modalbody">
           Patente<br>
-          <input type="text" name="patente_retiro" id="patente_retiro" required><br>
+          <input type="text" name="patente_retiro" id="patente_retiro" disabled><br>
             Hora de entrada:<br>
           <input type="text" name="hora_entrada" id="hora_entrada" disabled><br>
             Hora de salida:<br>
@@ -237,11 +237,16 @@ include_once 'clases/lugares.php';
           <input type="text" name="apellido" id="ape_mod" required><br>
           Password:<br>
           <input type="password" name="apellido" id="password_mod" required><br>
-          Tipo:<br>
-          <select id="tipo_mod">
-          <option>admin</option>
-          <option>user</option>
-          </select><br>
+          <?php
+          if($_SESSION["tipo"]=="admin")
+          {
+            echo "Tipo:<br>
+            <select id='tipo_mod'>
+            <option>admin</option>
+            <option>user</option>
+            </select><br>";
+          } 
+          ?>
           Turno:<br>
           <select id="turno_mod">
             <option>manana</option>

@@ -199,7 +199,7 @@ function ConfirmarModificacion()
 		}
 	});
 }
-function ModificarUser(id_usuario)
+function HistorialUser(id_usuario)
 {
 	var a=$.ajax({
 		type: 'post',
@@ -212,7 +212,7 @@ function ModificarUser(id_usuario)
 	a.done(function(respuesta){
 		if(respuesta != "error")
 		{
-			$("#~tablausuarios").html(respuesta);
+			$("#tablausuarios").html(respuesta);
 		}
 		else
 		{

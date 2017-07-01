@@ -128,7 +128,9 @@ $app->post('/nuevoUser',function($request,$response)
 $app->post('/HistorialUsuario',function($request,$response)
 	{
 		$datos = $request->getParsedBody();
-		$response->write(Usuario::HitsorialUsuario($datos["id"]));
+		$respuesta = Usuario::UltimosLogueos($datos["id"]);
+		$respuesta.= Usuario::DatosPorUsuario($datos["id"]);
+		$response->write($respuesta);
 
 		return $response;
 	});

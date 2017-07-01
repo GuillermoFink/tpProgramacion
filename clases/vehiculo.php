@@ -154,6 +154,7 @@ class Vehiculo
 		}
 		echo $inicio.$datos.$fin;
 	}
+	# CALCULA MONTO DE COBRO DEPENDIENDO LAS HORAS =============================================================================================================================
 	public static function CalcularMonto($tiempo)
 	{
 		$actual = time();
@@ -182,9 +183,9 @@ class Vehiculo
 		}
 		return $valor;
 	}
+	# TRAER LOS DATOS DE UN AUTO POR PATENTE INGRESADA =========================================================================================================================
 	public static function TraerAutoPorPatente($patente)
 	{
-		# LLEGA BIEN $respuesta = $patente;
 		$respuesta="error";
 		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
 		$db = $pdo->prepare("SELECT patente,id_lugar,hora  FROM autos WHERE patente=:pat");
@@ -200,6 +201,7 @@ class Vehiculo
 			}				
 		return $respuesta;
 	}
+	# VALIDACION DE PATENTE INGRESADA NUEVA O VIEJA ============================================================================================================================
 	public static function ValidarPatente($patente)
 	{
 		$validada = FALSE;

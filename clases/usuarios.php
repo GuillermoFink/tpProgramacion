@@ -218,6 +218,7 @@ class Usuario
 		return $respuesta;
 
 	}
+	# LOGIN ============================================================================================================================================
 	public static function LoginUsuario($usuario,$password)
 	{
 		$rta = false;
@@ -242,6 +243,7 @@ class Usuario
 		}
 		return $rta;
 	}
+	# CERRAR SESION E INGRESAR A LA BASE DE REGISTRO DE USUARIOS ========================================================================================
 	public static function CerrarSesion($id,$login)
 	{
 		$rta = FALSE;
@@ -258,6 +260,7 @@ class Usuario
 		}
 		return $rta;
 	}
+	# GENERAR FECHA PARA INGRESO A BASE ===================================================================================================================
 	public static function GenerarDate($timestamp)
 	{
 		$fecha = getdate($timestamp);
@@ -269,6 +272,7 @@ class Usuario
 		$fechaFormateada = date($dia."-".$mes."-".$anio."  ".$hora.":".$minuto);
 		return $fechaFormateada;
 	}
+	# TABLA DE USUARIOS ====================================================================================================================================
 	public static function TablaUsuarios()
 	{
 		$inicio = "<table class='table table-hover'>
@@ -324,6 +328,7 @@ class Usuario
 		}
 		echo $inicio.$datos.$fin;
 	}
+	# FORMATEO DE NOMBRE DE USUARIO ==================================================================================================================
 	public static function FormatoString($string)
 	{
 		$validado = strtolower($string);
@@ -339,6 +344,70 @@ class Usuario
 			$validado = $nombreCompuesto[0]." ".$nombreCompuesto[1];
 		}
 		return $validado;
+	}
+	# ULTIMOS 5 LOGINS ================================================================================================================================
+	public static function UltimosLogueos($id)
+	{
+		$fin = "		</table>
+					</div>
+				</div>";
+		$datos="";
+		$consulta="SELECT u.nombre, r.login, r.logout FROM registro_usuarios AS r, usuarios AS u WHERE id_usuario = :id AND id_usuario = u.id ORDER BY r.id DESC LIMIT 5";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare($consulta);
+		$db->bindValue(':id',$id);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos.="	<tr>
+							<td>".$linea["login"]."</td>
+							<td>".$linea["logout"]."</td>
+						</tr>";
+			$usuario = $linea["nombre"];
+		}
+		$titulos = "<div class='col-xs-6'>
+						<h2 class='sub-header'>Ultimos logins de ".$usuario."</h2>
+							<div class='table-responsive'>
+								<table class='table table-striped'>
+									<thead>
+										<tr class='success'>
+											<th>Nombre</th>
+											<th>Apellido</th>
+										</tr>
+									</thead>";
+		return $titulos.$datos.$fin;
+	}
+	# SUMA DE OPERACIONES POR USUARIO ==================================================================================================================
+	public static function DatosPorUsuario($id)
+	{
+		$consulta= "SELECT U.nombre, COUNT(*) as operaciones,SUM(monto) AS facturado FROM usuarios as U, registros WHERE id_usuario = :id AND id_usuario = u.id";
+		$fin = "		</table>
+					</div>
+				</div>";
+		$datos="";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare($consulta);
+		$db->bindValue(':id',$id);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos.="	<tr>
+							<td>".$linea["operaciones"]."</td>
+							<td>".$linea["facturado"]."</td>
+						</tr>";
+			$usuario = $linea["nombre"];
+		}
+		$titulos = "<div class='col-xs-6'>
+						<h2 class='sub-header'>Registros del usuario ".$usuario."</h2>
+							<div class='table-responsive'>
+								<table class='table table-striped'>
+									<thead>
+										<tr class='success'>
+											<th>Cantidad de operaciones</th>
+											<th>Monto facturado</th>
+										</tr>
+									</thead>";
+		return $titulos.$datos.$fin;
 	}
 	public static function HitsorialUsuario($id)
 	{
