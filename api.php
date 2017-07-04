@@ -10,6 +10,12 @@ require_once "clases/vehiculo.php";
 $app = new \Slim\App;
 
 //GETS****************************************************************************************************************************
+$app->get('/test',function($request,$response)
+	{
+		$response->getbody()->write(Registros::LugaresQueMasFacturaron().Registros::LugaresMenosUsados());
+
+		return $response;
+	});
 $app->get('/traertablaestacionados',function($request,$response)
 	{
 		$response->getbody()->write(Vehiculo::TablaEstacionados());
@@ -133,6 +139,22 @@ $app->post('/HistorialUsuario',function($request,$response)
 		$response->write($respuesta);
 
 		return $response;
+	});
+$app->post('/historicoPatente',function($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$respuesta = Registros::HistoricoPatente($datos["patente"]);
+
+		$response->write($respuesta);
+
+		return $response;
+	});
+$app->post('/HistoricoPorFecha',function ($request,$response)
+	{
+		$datos = $request->getParsedBody();
+		$respuesta = Usuario::TraerUnUsuario($datos["idUser"]);
+
+		$response->write($respuesta);
 	});
 //DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)

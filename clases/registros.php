@@ -79,6 +79,22 @@ class Registros
 			}				
 		return $ListaDeRegistros;
 	}
+	#ARRAY DE REGISTROS POR PATENTE---------------------------------------------------------------------------------------------------------------------------
+	public static function TraerRegistrosPorPatente($pat)
+	{
+		$ListaDeRegistros = array();
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$contenido = $pdo->prepare("SELECT * FROM registros WHERE patente = :pat");
+		$contenido->bindValue(':pat',$pat);
+		$contenido->execute();
+		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
+			{
+				$unRegistro = new Registros($linea["id_lugar"],$linea["id_usuario"],$linea["patente"],$linea["hora_inicio"],$linea["hora_fin"],$linea["monto"]);
+				array_push($ListaDeRegistros, $unRegistro);
+			}				
+		return $ListaDeRegistros;
+	}
+
 	#TABLA REGISTROS------------------------------------------------------------------------------------------------------------------------------
 	public static function TraerTablaRegistros()
 	{
@@ -120,6 +136,7 @@ class Registros
 					<select id='selectFiltro' onchange='TablaFiltrada()'>
 						<option>Usuario</option>
 						<option selected='selected'>Cocheras</option>
+						<option>Operaciones</option>
 					</select>
 				</div>
 				<div id='resultadoFiltro'>
@@ -135,19 +152,20 @@ class Registros
 		{
 			case 'Usuario':
 				$titulo = "Registros de Usuarios";
-				//$datos = Registros::InformacionUsuarios();
+				//$datos = Registros::LadoIzquierdo();
 				$datos = Registros::LogueoDeUsuarios();
 				$datos.= Registros::OperacionesMontosPorUsuario();
 				break;
 			case 'Operaciones':
 				$titulo = "Registros de Operaciones";
-				$datos = Registros::OperacionesMontosPorUsuario();
+				$datos = Registros::LadoIzquierdo();
 				break;
 			case 'Cocheras':
 				$titulo = "Registros de Cocheras";
 				$datos = Registros::LugaresMasUsados();
 				$datos.= Registros::LugaresMenosUsados();
 				$datos.= Registros::LugaresQueMasFacturaron();
+				$datos.= Registros::LugaresQueNuncaSeUsaron();
 				break;
 			default:
 				$datos = "NULL";
@@ -330,6 +348,44 @@ class Registros
 		}
 		return $inicio.$datos.$fin;
 	}
+	public static function LugaresQueNuncaSeUsaron()
+	{
+		$datos="";
+		$inicio = "	<div class='col-xs-6'>
+						<h2 class='sub-header'>TOP 5 No Usados</h2>
+							<div class='table-responsive'>
+								<table class='table table-striped'>
+									<thead>
+										<tr class='danger'>
+											<th>Lugar</th>
+											<th>Piso</th>
+											<th>Discapacitado</th>
+										</tr>
+									</thead>";
+		$fin = "				</table>
+							</div>
+					</div>";
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$consulta="SELECT * FROM lugares WHERE id_lugar NOT IN (SELECT id_lugar FROM registros) AND ocupado =0 LIMIT 5";
+		$contenido = $pdo->query($consulta);
+		while($linea = $contenido->fetch(PDO::FETCH_ASSOC))
+		{
+			if($linea["discapacitado"] == 1)
+			{
+				$disc = "Si";
+			}
+			else
+			{
+				$disc = "No";
+			}
+			$datos.="	<tr>
+							<td>".$linea["id_lugar"]."</td>
+							<td>".$linea["id_piso"]."</td>
+							<td>".$disc."</td>
+						</tr>";
+		}
+		return $inicio.$datos.$fin;
+	}
 	# TABLA DE TOP 5 DE LUGARES MENOS UTILIZADOS =============================================================================================================
 	public static function LugaresMenosUsados()
 	{
@@ -361,6 +417,71 @@ class Registros
 						</tr>";
 		}
 		return $inicio.$datos.$fin;
+	}
+	# HISTORICO POR PATENTE =============================================================================================================
+	public static function HistoricoPatente($pat)
+	{
+		$registros = array();
+		$registros = Registros::TraerRegistrosPorPatente($pat);
+		if(isset($registros[0]))
+		{
+			$inicio = "<center><h2>Historico Por Patente</h2></center>
+					<table class='table table-hover'>
+						<thead>
+							<tr class='info'>
+								<th>Lugar</th>
+								<th>Usuario</th>
+								<th>Patente</th>
+								<th>Entrada</th>
+								<th>Salida</th>
+								<th>Monto</th>
+							</tr>
+						</thead>";
+			$fin= "</table>";
+			$datos= "";		
+			foreach ($registros as $item)
+			{
+				$entrada = date("d-m-y H:i",$item->GetEntrada());
+				$salida = date("d-m-y H:i",$item->GetSalida());
+				$datos.="<tr>
+							<td>".$item->GetLugar()."</td>
+							<td>".$item->GetUsuario()."</td>
+							<td>".$item->GetPatente()."</td>
+							<td>".$entrada."</td>
+							<td>".$salida."</td>
+							<td>".$item->GetMonto()."</td>
+						</tr>";
+			}
+			$respuesta = $inicio.$datos.$fin;
+		}else
+		{
+			$respuesta = "error";
+		}
+		return $respuesta;
+		
+	}
+	public static function LadoIzquierdo()
+	{
+		$html = "<div class='col-xs-3'>
+					<h2 class='sub-header'>Opciones</h2>
+						<form>
+							<label class='radio-inline'><input type='radio' name='optradio' onchange='datos()'>Cocheras</label>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 2</label>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 3</label>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 4</label>
+						</form>
+				</div>";
+		$derecho = "<div class='col-xs-9' id='derecha'>
+					<h2 class='sub-header'>DERECHA</h2>
+						<form>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 1</label>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 2</label>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 3</label>
+							<label class='radio-inline'><input type='radio' name='optradio'>Option 4</label>
+						</form>
+				</div>";
+
+		return $html.$derecho;
 	}
 	public static function TopRegistrosPorUsuario()
 	{

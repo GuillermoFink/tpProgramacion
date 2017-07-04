@@ -65,7 +65,7 @@ include_once 'clases/lugares.php';
       <button class="btn btn-info" onclick="TablaEstacionados()">Inicio</button>
       <button class="btn btn-primary" onclick="IngresarAuto()">Ingresar Auto</button>
       <button class="btn btn-success" onclick="RetirarAuto()">Retirar Auto</button>
-      <!--<button class="btn btn-warning" onclick="TablaRegistros()">Estadisticas</button>-->
+      <button class="btn btn-warning" onclick="ModalHistoricoPatente()">HistoricoPat</button>
       <button class="btn" onclick="TablaFiltros()">Filtros</button>
       <button class="btn btn-danger" onclick ="CerrarSesion(<?php echo $_SESSION["id"].",".$_SESSION["login"]; ?>)">Cerrar Sesion</button>
       <br><center><h2 id="titulo">Autos Estacionados</h2></center>
@@ -305,6 +305,58 @@ include_once 'clases/lugares.php';
 </div>
 </div>
 
+  </div>
+  <!--MODAL DE UBICAR POR FECHA-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="modalPorFecha" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id='nombre_fecha'>Datos por fecha</h4>
+        </div>
+        <div class="modal-body" id="fechaUser">
+          <label>Dia</label>
+          <input type="number" name="dia" id='dia' max="30">
+          <label>Mes</label>
+          <input type="number" name="mes" id='mes' max="12">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="ProcesarFecha()">Procesar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+  </div>
+
+<!--MODAL DE HISTORICO DE PATENTE-->
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="historicoPatente" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Historial de patente</h4>
+        </div>
+        <div class="modal-body" id="retiroPorPatente">
+          Ingrese Patente:<br>
+          <input type="text" name="patente_busco" id="patente_busco" required><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="HistoricoPatente()">Procesar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
 </body>
 </html>

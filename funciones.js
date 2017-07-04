@@ -237,9 +237,52 @@ function CerrarSesion(id_usuario,login)
 		window.location.href ="index.php";
 	});
 }
+function PorFecha(id)
+{
+	var a=$.ajax({
+		type:'post',
+		url: 'http://localhost/git/HistoricoPorFecha',
+		data:
+			{
+				idUser: id
+			}
+	});
+	a.done(function(respuesta){
+		var datos = respuesta.split("*");
+		$("#nombre_fecha").html("Datos por fecha de: "+datos[2]);
+		$("#modalPorFecha").modal("show");
+	});
+}
 //***********************************************AUTOS*******************************************************************************
 //***********************************************AUTOS*******************************************************************************
 //***********************************************AUTOS*******************************************************************************
+function ModalHistoricoPatente()
+{
+	$("#patente_busco").val("");
+	$("#historicoPatente").modal("show");
+}
+function HistoricoPatente()
+{
+	var a=$.ajax({
+		type: 'post',
+		url: 'http://localhost/git/historicoPatente',
+		data:
+			{
+				patente: $("#patente_busco").val()
+			}
+	});
+	a.done(function(respuesta){
+		//alert(respuesta);
+		if(respuesta == "error")
+		{
+			alert("No se encontro registro de la pantete");
+		}else
+		{
+			$("#tablaEstacionados").html(respuesta);
+		}
+		$("#historicoPatente").modal("hide");
+	});
+}
 function IngresarAuto()
 {
 	$("#patente").val("");
@@ -460,5 +503,16 @@ function GrillaLugares(piso)
 	a.done(function(respuesta)
 	{
 		$("#lugaresLibres"+piso).html(respuesta);
+	});
+}
+function datos()
+{
+	var a=$.ajax({
+		type:'get',
+		url: 'http://localhost/git/test'
+	});
+	a.done(function(respuesta)
+	{
+		$("#derecha").html(respuesta);
 	});
 }
