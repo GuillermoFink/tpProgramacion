@@ -269,7 +269,7 @@ class Usuario
 		$anio = $fecha["year"];
 		$hora = $fecha["hours"];
 		$minuto = $fecha["minutes"];
-		$fechaFormateada = date($dia."-".$mes."-".$anio."  ".$hora.":".$minuto);
+		$fechaFormateada = date($anio."-".$mes."-".$dia."  ".$hora.":".$minuto);
 		return $fechaFormateada;
 	}
 	# TABLA DE USUARIOS ====================================================================================================================================
@@ -409,9 +409,68 @@ class Usuario
 									</thead>";
 		return $titulos.$datos.$fin;
 	}
-	public static function HitsorialUsuario($id)
+	public static function MostrarRegistrosPorUnaFecha($anio,$mes,$dia,$anio2,$mes2,$dia2)
 	{
-		
+		if($anio2 === "")
+		{
+			$anio2 = $anio;
+			$mes2 = $mes;
+			$dia2 = $dia;
+		}
+		$mes = Usuario::FormatoDate($mes);
+		$dia = Usuario::FormatoDate($dia);
+		$mes2 = Usuario::FormatoDate($mes2);
+		$dia2 = Usuario::FormatoDate($dia2);
+
+		$fecha1 = $anio."-".$mes."-".$dia;
+		$fecha2 = $anio2."-".$mes2."-".$dia2;
+
+		$consulta= "SELECT  monto,u.nombre,FROM_UNIXTIME(hora_inicio) AS inicio,
+					FROM_UNIXTIME(hora_fin) AS fin FROM `registros`, usuarios AS u 
+					WHERE FROM_UNIXTIME(hora_fin) BETWEEN :fecha1 AND ADDDATE(:fecha2,1)
+					AND id_usuario = u.id";
+		$inicio = "<table class='table table-hover'>
+						<thead>
+							<tr class='success'>
+								<th>Usuario</th>
+								<th>Inicio</th>
+								<th>Fin</th>
+								<th>Monto</th>
+						</thead>";
+		$datos = "";
+		$fin ="</table>";
+
+		$pdo = new PDO("mysql:host = localhost; dbname=estacionamiento","root","");
+		$db = $pdo->prepare($consulta);
+		$db->bindValue(':fecha1',$fecha1);
+		$db->bindValue(':fecha2',$fecha2);
+		$db->execute();
+		while($linea = $db->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos.= "	<tr>
+							<td>".$linea["nombre"]."</td>
+							<td>".$linea["inicio"]."</td>
+							<td>".$linea["fin"]."</td>
+							<td>".$linea["monto"]."</td>
+						</tr>";
+		}
+		if($datos === "")
+		{
+			$respuesta = "error";
+		}
+		else
+		{
+			$respuesta = $inicio.$datos.$fin;
+		}
+		return $respuesta;
+	}
+	public static function FormatoDate($fecha)
+	{
+		if (strlen($fecha) < 2)
+		{
+			$fecha="0".$fecha;
+		}
+		return $fecha;
 	}
 }
 ?>

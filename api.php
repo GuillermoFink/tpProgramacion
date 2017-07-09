@@ -46,6 +46,12 @@ $app->get('/TopUsuarios',function($request,$response)
 
 		return $response;
 	});
+$app->get('/display',function($request,$response)
+	{
+		$response->getBody()->write(Usuario::DisplayEntre());
+
+		return $response;
+	});
 //PUTS****************************************************************************************************************************
 $app->put('/Deshabilitar',function($request,$response)
 	{
@@ -155,6 +161,14 @@ $app->post('/HistoricoPorFecha',function ($request,$response)
 		$respuesta = Usuario::TraerUnUsuario($datos["idUser"]);
 
 		$response->write($respuesta);
+	});
+$app->post('/traerOpPorFecha',function ($request,$response)
+	{
+		$datos = $request->getParsedBody();
+
+		$response->write(Usuario::MostrarRegistrosPorUnaFecha($datos["anio"],$datos["mes"],$datos["dia"],$datos["anio2"],$datos["mes2"],$datos["dia2"]));
+
+		return $response;
 	});
 //DELETES***************************************************************************************************************************
 $app->delete('/RetirarAuto',function($request,$response)

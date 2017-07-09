@@ -41,6 +41,36 @@ function LlenarBase()
 //***********************************************USUARIOS*******************************************************************************
 //***********************************************USUARIOS*******************************************************************************
 //***********************************************USUARIOS*******************************************************************************
+function DisplayEntre()
+{
+	if($("#chk1").is(':checked'))
+		{
+			$("#lbl1").show();
+			$("#lbl2").show();
+			$("#lbl3").show();
+			$("#dia2").show();
+			$("#mes2").show();
+			$("#anio2").show();		
+		}else
+		{
+			$("#lbl1").hide();
+			$("#lbl2").hide();
+			$("#lbl3").hide();
+			$("#dia2").hide();
+			$("#mes2").hide();
+			$("#anio2").hide();	
+		}
+}
+function ModalFechaUsuario()
+{
+	$("#dia1").val("");
+	$("#mes1").val("");
+	$("#anio1").val("");
+	$("#dia2").val("");
+	$("#mes2").val("");
+	$("#anio2").val("");
+	$("#modalPorFecha").modal("show");
+}
 function ModalAltaUsuario()
 {
 	$("#alta_nombre").val("");
@@ -514,5 +544,32 @@ function datos()
 	a.done(function(respuesta)
 	{
 		$("#derecha").html(respuesta);
+	});
+}
+function ProcesarFecha()
+{
+	var a=$.ajax({
+		type:'post',
+		url: 'http://localhost/git/traerOpPorFecha',
+		data:
+			{
+				anio: $("#anio1").val(),
+				mes: $("#mes1").val(),
+				dia: $("#dia1").val(),
+				anio2: $("#anio2").val(),
+				mes2: $("#mes2").val(),
+				dia2: $("#dia2").val()
+			}
+	});
+	a.done(function(respuesta){
+		if(respuesta != "error")
+		{
+			$("#tablausuarios").html(respuesta);
+		}
+		else
+		{
+			alert("No hay registros a la fecha");
+		}
+		$("#modalPorFecha").modal("hide");
 	});
 }

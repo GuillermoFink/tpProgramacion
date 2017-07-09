@@ -4,8 +4,14 @@ require_once "clases/usuarios.php";
 require_once "clases/registros.php";
 require_once "clases/lugares.php";
 require_once "clases/vehiculo.php";
+require_once "clases/registro_usuario.php";
 
-echo Usuario::FormatoString("juAn PabLo jose");
-echo"<br>";
-echo Usuario::FormatoString("raul");
+/*$arrayReg = RegUsuario::ArrayRegistros();
+
+foreach ($arrayReg as $registro)
+{
+	echo RegUsuario::ModificarBase($registro);
+	//echo $registro->GetLogin()."  |  ";
+	//echo RegUsuario::ModificarUnRegistro($registro->GetLogin())."<br>";
+}*/
 ?>

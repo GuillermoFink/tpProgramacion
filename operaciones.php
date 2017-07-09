@@ -81,7 +81,8 @@ include_once 'clases/lugares.php';
       {
         echo '<button class="btn btn-info" onclick="TablaUsuarios()">Lista de Usuarios</button>
               <button class="btn btn-warning" onclick="TablaRegistros()">Registros</button>
-              <button class="btn btn-success" onclick="ModalAltaUsuario()">Nuevo Usuario</button>';
+              <button class="btn btn-success" onclick="ModalAltaUsuario()">Nuevo Usuario</button>
+              <button class="btn" onclick="ModalFechaUsuario()">Historial Usuario</button>';
       }
       ?>
       	<div id='tablausuarios'>
@@ -320,9 +321,20 @@ include_once 'clases/lugares.php';
         </div>
         <div class="modal-body" id="fechaUser">
           <label>Dia</label>
-          <input type="number" name="dia" id='dia' max="30">
+          <input type="number" name="dia" id='dia1' min="1" max="30" required>
           <label>Mes</label>
-          <input type="number" name="mes" id='mes' max="12">
+          <input type="number" name="mes" id='mes1' min="1" max="12" required>
+          <label>Año</label>
+          <input type="number" name="mes" id='anio1' required><br>
+          <label><input type="checkbox" id='chk1' onchange="DisplayEntre()">Entre</label>
+          <div id='entreFechas'>
+          <label id='lbl1' hidden=true>Dia</label>
+            <input type='number' name='dia' id='dia2' min='1' max='30' hidden=true required>
+            <label id='lbl2' hidden=true>Mes</label>
+            <input type='number' name='mes' id='mes2' min='1' max='12' hidden=true required>
+            <label id='lbl3' hidden=true>Año</label>
+            <input type='number' name='mes' id='anio2' hidden=true required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" onclick="ProcesarFecha()">Procesar</button>

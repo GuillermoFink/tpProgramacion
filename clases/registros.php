@@ -136,7 +136,6 @@ class Registros
 					<select id='selectFiltro' onchange='TablaFiltrada()'>
 						<option>Usuario</option>
 						<option selected='selected'>Cocheras</option>
-						<option>Operaciones</option>
 					</select>
 				</div>
 				<div id='resultadoFiltro'>
@@ -483,10 +482,7 @@ class Registros
 
 		return $html.$derecho;
 	}
-	public static function TopRegistrosPorUsuario()
-	{
-		$inicio="";
-		$datos="";
-	}
+
+	
 }
 ?>
